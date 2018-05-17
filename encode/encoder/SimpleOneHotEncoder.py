@@ -14,7 +14,12 @@ class SimpleOneHotEncoder:
         :param dimensions: 编码的所有记录(含说明)
         :param code_key: 记录中编码的字段名
         """
-        return SimpleOneHotCoder(passport, dimensions, code_key)
+        # 取特征值:多个相同的特征会映射为同一个值
+        codes = set()
+        for dimension in dimensions:  # type:dict
+            codes.add(dimension[code_key])
+
+        return SimpleOneHotCoder(passport, dimensions, codes)
 
     @staticmethod
     def coding(coder: SimpleOneHotCoder, data: list, code_key: str):
@@ -27,7 +32,7 @@ class SimpleOneHotEncoder:
         """
         result = []
         codes = coder.codes
-        for item in data:
+        for item in data:  # type:dict
             value = item[code_key]
             if value in codes:
                 result.append(value)

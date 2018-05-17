@@ -1,8 +1,7 @@
+qualitys = {}
+qualitys.setdefault("abcd", 1)
+print(qualitys.get("abcd"))
 
-qualitys = [{"id": 10000000001500001, "value": "未知品质"},
-            {"id": 10000000001500001, "value": "良品"},
-            {"id": 10000000001500001, "value": "合格品"},
-            {"id": 10000000001500001, "value": "次品"},
-            {"id": 10000000001500001, "value": "废品"}]
-
-print(qualitys[0]["value"])
+a=111
+b=2
+print(str(a)+str(b))

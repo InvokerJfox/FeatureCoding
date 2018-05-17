@@ -7,20 +7,22 @@ class SimpleOneHotData:
     用于存储独热编码后的数据
     """
 
-    def __init__(self, coder: SimpleOneHotCoder, data: list, code_dict: str):
+    def __init__(self, coder: SimpleOneHotCoder):
         """
-
-        :param coder:
-        :param data:
-        :param code_dict:
+        初始化一个编码结果存储单元
+        :param coder:编码表
         """
         super().__init__()
         self.coder = coder
+        self.description = []
+        self.data = []
+
+    def append(self, data: list, code_dict: str):
+        """
+        添加新数据
+        :param data:
+        :param code_dict:
+        :return:
+        """
         self.description = data
-        self.data = SimpleOneHotEncoder.coding(coder, data, code_dict)
-
-    def append(self, other):
-        pass
-
-    def __add__(self, other):
-        self.append(other)
+        self.data.append(SimpleOneHotEncoder.coding(self.coder, data, code_dict))
