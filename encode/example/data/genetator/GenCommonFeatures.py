@@ -1,9 +1,12 @@
+from encode.data.SimpleOneHotData import SimpleOneHotData
 from encode.encoder.SimpleOneHotEncoder import SimpleOneHotEncoder
 
 from encode.example.data.record import CommonRecords
 
-qualityEncoder = SimpleOneHotEncoder("quality_common_code", CommonRecords.qualitys)
-print(qualityEncoder.dimensions())
+qualityCoder = SimpleOneHotEncoder.register("quality_common_code", CommonRecords.qualitys, "defined")
+print(qualityCoder.codes)
+print(qualityCoder.description)
 
-qualityEncoder.append(CommonRecords.data, 'quality')
-print(qualityEncoder.code_data)
+qualityData = SimpleOneHotData(qualityCoder, CommonRecords.goods, 'quality')
+print(qualityData.data)
+print(qualityData.description)

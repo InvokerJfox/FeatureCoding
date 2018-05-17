@@ -1,4 +1,4 @@
-class SimpleMapCode:
+class SimpleMapCoder:
     """
     映射编码结果
     1.映射的起始和目标态值可以是具有唯一特性的数值,字符串等

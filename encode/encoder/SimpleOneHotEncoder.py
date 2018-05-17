@@ -1,4 +1,4 @@
-from encode.code.SimpleOneHotCode import SimpleOneHotCode
+from encode.coder.SimpleOneHotCoder import SimpleOneHotCoder
 
 
 class SimpleOneHotEncoder:
@@ -7,28 +7,31 @@ class SimpleOneHotEncoder:
     """
 
     @staticmethod
-    def coding(passport, dimensions) -> SimpleOneHotCode:
+    def register(passport: str, dimensions: list, code_key: str) -> SimpleOneHotCoder:
         """
         通过特征生成一个简单的独热编码器
         :param passport: 通行证(码),用于识别编码问题
-        :param dimensions:
+        :param dimensions: 编码的所有记录(含说明)
+        :param code_key: 记录中编码的字段名
         """
-        return SimpleOneHotCode(passport, dimensions)
+        return SimpleOneHotCoder(passport, dimensions, code_key)
 
     @staticmethod
-    def append(code: SimpleOneHotCode, data: list):
+    def coding(coder: SimpleOneHotCoder, data: list, code_key: str):
         """
-        
-        :param code:
-        :param data:
+        将数据进行编码效验并返回编码结果
+        :param coder:
+        :param data:list[dict]
+        :param code_key: data中要编码的key
         :return:
         """
+        result = []
+        codes = coder.codes
+        for item in data:
+            value = item[code_key]
+            if value in codes:
+                result.append(value)
+            else:
+                raise ValueError("value:%s is not in codes!" % value)
 
-    def type_check(a, b):
-        if a.passport != b.passport:
-            raise ValueError("a.passport:%s != b.passport:%s" % a.passport, b.passport)
-        if isinstance(a, SimpleOneHotCode) or isinstance(b, SimpleOneHotCode):
-            raise ValueError("bit operation function needs <SimpleOneHotCode> but %s and %s found" % type(a), type(b))
-        if len(a.record_list) != len(b.record_list):
-            raise ValueError(
-                "bit operation function needs two same length args,but len:$d and len:%d found" % len(a), len(b))
+        return result

@@ -1,7 +1,8 @@
-from numpy import *
 
-from encode.code.SimpleOneHotCode import SimpleOneHotCode
+qualitys = [{"id": 10000000001500001, "value": "未知品质"},
+            {"id": 10000000001500001, "value": "良品"},
+            {"id": 10000000001500001, "value": "合格品"},
+            {"id": 10000000001500001, "value": "次品"},
+            {"id": 10000000001500001, "value": "废品"}]
 
-data = [1, 23, 4]
-data.append(5)
-print(data)
+print(qualitys[0]["value"])
