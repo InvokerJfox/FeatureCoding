@@ -9,7 +9,7 @@ class SimpleOneHotCoder:
 
     def __init__(self, passport: str, dimensions: list, codes: set):
         """
-        初始化一个编码表
+        初始化一个独热编码表
         :param passport: 通行证
         :param dimensions: 每一个编码对应的说明信息
         :param codes: 用于计算的编码

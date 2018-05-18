@@ -7,7 +7,7 @@ class MappingOneHotCoder:
 
     def __init__(self, passport: str, dimensions: list, codes: dict):
         """
-        初始化一个编码表
+        初始化一个映射编码表
         :param passport: 通行证
         :param dimensions: 每一个编码对应的说明信息
         :param codes: 用于计算的编码的key为start与target的合并，value为start/target分别值

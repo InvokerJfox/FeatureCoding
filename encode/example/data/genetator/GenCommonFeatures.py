@@ -13,13 +13,13 @@ from encode.example.data.record import CommonRecords
 # print(qualityData.data)
 # print(qualityData.description)
 
-qualityMappingCoder = MappingOneHotEncoder.register("quality_mapping_code", CommonRecords.define_operations,
-                                                    start_key="from", target_key="to")
-print("codes:%s" % qualityMappingCoder.codes)
-print("codes description:%s" % qualityMappingCoder.description)
-
-jobsData = MappingOneHotData(qualityMappingCoder)
-jobsData.append(CommonRecords.jobs, start_key="from", target_key="to")
-
-print("data:%s" % jobsData.data)
-print("data description:%s" % jobsData.description)
+# qualityMappingCoder = MappingOneHotEncoder.register("quality_mapping_code", CommonRecords.define_operations,
+#                                                     start_key="from", target_key="to")
+# print("codes:%s" % qualityMappingCoder.codes)
+# print("codes description:%s" % qualityMappingCoder.description)
+#
+# jobsData = MappingOneHotData(qualityMappingCoder)
+# jobsData.append(CommonRecords.jobs, start_key="from", target_key="to")
+#
+# print("data:%s" % jobsData.data)
+# print("data description:%s" % jobsData.description)
