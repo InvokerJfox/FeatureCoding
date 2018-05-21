@@ -17,12 +17,11 @@ class SimpleOneHotData:
         self.description = []
         self.data = []
 
-    def append(self, data: list, code_dict: str):
+    def append(self, data: list):
         """
         添加新数据
         :param data:原始数据
-        :param code_dict:需要编码的维度
         :return:
         """
         self.description.append(data)
-        self.data.append(SimpleOneHotEncoder.coding(self.coder, data, code_dict))
+        self.data.append(SimpleOneHotEncoder.coding(self.coder, data))

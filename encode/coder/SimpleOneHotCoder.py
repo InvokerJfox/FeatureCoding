@@ -7,14 +7,16 @@ class SimpleOneHotCoder:
             (实际是维度定义不合理，可以转为用最近的一个点、体积等特征)
     """
 
-    def __init__(self, passport: str, dimensions: list, codes: set):
+    def __init__(self, passport: str, records: list, dimensions: set, codes: set):
         """
         初始化一个独热编码表
         :param passport: 通行证
+        :param records: 编码前原始信息
         :param dimensions: 每一个编码对应的说明信息
         :param codes: 用于计算的编码
         """
         super().__init__()
         self.passport = passport
-        self.description = dimensions
+        self.descriptions = records
+        self.dimensions = dimensions
         self.codes = codes

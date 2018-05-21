@@ -7,49 +7,51 @@ class SimpleOneHotEncoder:
     """
 
     @staticmethod
-    def expand(older: SimpleOneHotCoder, dimensions: list, code_key: str) -> SimpleOneHotCoder:
+    def expand(older: SimpleOneHotCoder, records: list) -> SimpleOneHotCoder:
         """
         对编码器追加特征
         :param older: 旧编码器
-        :param dimensions: 编码的所有记录(含说明)
-        :param code_key: 记录中编码的字段名
+        :param records: 所有记录(含说明)
         :return:
         """
-        codes = older.codes
-        for dimension in dimensions:  # type:dict
-            codes.add(dimension[code_key])
+        older.descriptions.append(records)
+        code_keys = older.dimensions
+        codes = older.codes  # type:set
+        for value in records:  # type:dict
+            for code_key in code_keys:
+                codes.add(code_key + str(value[code_key]))
 
-        older.description.append(dimensions)
         return older
 
     @staticmethod
-    def coder(passport: str, dimensions: list, code_key: str) -> SimpleOneHotCoder:
+    def coder(passport: str, records: list, code_keys: set) -> SimpleOneHotCoder:
         """
         通过特征生成一个简单的独热编码器
         :param passport: 通行证(码),用于识别编码问题
-        :param dimensions: 编码的所有记录(含说明)
-        :param code_key: 记录中编码的字段名
+        :param records: 编码的所有记录(含说明)
+        :param code_keys: 记录中编码的字段名
         :return:
         """
-        coder = SimpleOneHotCoder(passport, [], set())
-        return SimpleOneHotEncoder.expand(coder, dimensions, code_key)
+        coder = SimpleOneHotCoder(passport, [], code_keys, set())
+        return SimpleOneHotEncoder.expand(coder, records)
 
     @staticmethod
-    def coding(coder: SimpleOneHotCoder, data: list, code_key: str) -> list:
+    def coding(coder: SimpleOneHotCoder, data: list) -> list:
         """
         将数据进行编码效验并返回编码结果
         :param coder:
         :param data:list[dict]
-        :param code_key: data中要编码的key
         :return:
         """
         result = []
         codes = coder.codes
+        code_keys = coder.dimensions
         for item in data:  # type:dict
-            value = item[code_key]
-            if value in codes:
-                result.append(value)
-            else:
-                raise ValueError("value:%s is not in codes!" % value)
+            for code_key in code_keys:
+                value = code_key + str(item[code_key])
+                if value in codes:
+                    result.append(value)
+                else:
+                    raise ValueError("value:%s is not in codes!" % value)
 
         return result
