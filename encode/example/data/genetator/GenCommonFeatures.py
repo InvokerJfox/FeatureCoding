@@ -1,6 +1,7 @@
 from encode.data.MappingOneHotData import MappingOneHotData
 from encode.data.SimpleOneHotData import SimpleOneHotData
-from encode.encoder.MappingOntHotCoder import MappingOneHotEncoder
+from encode.encoder import IterativeRouteEncoder
+from encode.encoder.MappingOntHotEncoder import MappingOneHotEncoder
 from encode.encoder.SimpleOneHotEncoder import SimpleOneHotEncoder
 from encode.example.data.record import CommonRecords
 
@@ -23,3 +24,14 @@ from encode.example.data.record import CommonRecords
 #
 # print("data:%s" % jobsData.data)
 # print("data description:%s" % jobsData.description)
+
+qualityGraphCoder = IterativeRouteEncoder.register("quality_mapping_code", CommonRecords.define_operations,
+                                                   start_key="from", target_key="to")
+print("codes:%s" % qualityGraphCoder.codes)
+print("codes description:%s" % qualityGraphCoder.description)
+
+qualityGraphData = MappingOneHotData(qualityGraphCoder)
+qualityGraphData.append(CommonRecords.jobs, start_key="from", target_key="to")
+
+print("data:%s" % qualityGraphData.data)
+print("data description:%s" % qualityGraphData.description)

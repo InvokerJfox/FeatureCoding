@@ -1,5 +1,5 @@
 from encode.coder.MappingOneHotCoder import MappingOneHotCoder
-from encode.encoder.MappingOntHotCoder import MappingOneHotEncoder
+from encode.encoder.MappingOntHotEncoder import MappingOneHotEncoder
 
 
 class MappingOneHotData:

@@ -3,7 +3,7 @@ from encode.coder.SimpleOneHotCoder import SimpleOneHotCoder
 
 class SimpleOneHotEncoder:
     """
-        定义数据规模,对数据进行one-hot编码(0/1编码)
+        定义编码规模,对数据进行one-hot编码(0/1编码)
     """
 
     @staticmethod
@@ -22,7 +22,7 @@ class SimpleOneHotEncoder:
         return SimpleOneHotCoder(passport, dimensions, codes)
 
     @staticmethod
-    def coding(coder: SimpleOneHotCoder, data: list, code_key: str):
+    def coding(coder: SimpleOneHotCoder, data: list, code_key: str)->list:
         """
         将数据进行编码效验并返回编码结果
         :param coder:

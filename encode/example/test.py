@@ -1,9 +1,4 @@
-def ans(n, a, b, f):
-    print("%s says %d" % (n, f(a, b)))
+from numpy import mat, zeros
 
-
-def ah(a, b):
-    return a + b
-
-
-ans("jfox", 1, 5, ah)
+l = [1, 2]
+print(l.index(2))
