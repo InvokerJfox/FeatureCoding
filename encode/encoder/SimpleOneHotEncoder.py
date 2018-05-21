@@ -7,22 +7,35 @@ class SimpleOneHotEncoder:
     """
 
     @staticmethod
-    def register(passport: str, dimensions: list, code_key: str) -> SimpleOneHotCoder:
+    def expand(older: SimpleOneHotCoder, dimensions: list, code_key: str) -> SimpleOneHotCoder:
+        """
+        对编码器追加特征
+        :param older: 旧编码器
+        :param dimensions: 编码的所有记录(含说明)
+        :param code_key: 记录中编码的字段名
+        :return:
+        """
+        codes = older.codes
+        for dimension in dimensions:  # type:dict
+            codes.add(dimension[code_key])
+
+        older.description.append(dimensions)
+        return older
+
+    @staticmethod
+    def coder(passport: str, dimensions: list, code_key: str) -> SimpleOneHotCoder:
         """
         通过特征生成一个简单的独热编码器
         :param passport: 通行证(码),用于识别编码问题
         :param dimensions: 编码的所有记录(含说明)
         :param code_key: 记录中编码的字段名
+        :return:
         """
-        # 取特征值:多个相同的特征会映射为同一个值
-        codes = set()
-        for dimension in dimensions:  # type:dict
-            codes.add(dimension[code_key])
-
-        return SimpleOneHotCoder(passport, dimensions, codes)
+        coder = SimpleOneHotCoder(passport, [], set())
+        return SimpleOneHotEncoder.expand(coder, dimensions, code_key)
 
     @staticmethod
-    def coding(coder: SimpleOneHotCoder, data: list, code_key: str)->list:
+    def coding(coder: SimpleOneHotCoder, data: list, code_key: str) -> list:
         """
         将数据进行编码效验并返回编码结果
         :param coder:
