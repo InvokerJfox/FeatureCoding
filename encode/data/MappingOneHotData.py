@@ -1,3 +1,6 @@
+import numpy as np
+from numpy import array
+
 from encode.coder.MappingOneHotCoder import MappingOneHotCoder
 from encode.encoder.MappingOntHotEncoder import MappingOneHotEncoder
 
@@ -15,7 +18,7 @@ class MappingOneHotData:
         super().__init__()
         self.coder = coder
         self.description = []
-        self.data = []
+        self.data = array(())
 
     def append(self, data: list):
         """
@@ -23,5 +26,5 @@ class MappingOneHotData:
         :param data:原始数据
         :return:
         """
-        self.description.append(data)
-        self.data.append(MappingOneHotEncoder.coding(self.coder, data))
+        self.description.extend(data)
+        self.data = np.append(self.data, MappingOneHotEncoder.coding(self.coder, data))

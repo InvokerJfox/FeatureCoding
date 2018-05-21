@@ -7,14 +7,14 @@ class SimpleOneHotEncoder:
     """
 
     @staticmethod
-    def expand(older: SimpleOneHotCoder, records: list) -> SimpleOneHotCoder:
+    def extend(older: SimpleOneHotCoder, records: list) -> SimpleOneHotCoder:
         """
         对编码器追加特征
         :param older: 旧编码器
         :param records: 所有记录(含说明)
         :return:
         """
-        older.descriptions.append(records)
+        older.descriptions.extend(records)
         code_keys = older.dimensions
         codes = older.codes  # type:set
         for value in records:  # type:dict
@@ -33,7 +33,7 @@ class SimpleOneHotEncoder:
         :return:
         """
         coder = SimpleOneHotCoder(passport, [], code_keys, set())
-        return SimpleOneHotEncoder.expand(coder, records)
+        return SimpleOneHotEncoder.extend(coder, records)
 
     @staticmethod
     def coding(coder: SimpleOneHotCoder, data: list) -> list:

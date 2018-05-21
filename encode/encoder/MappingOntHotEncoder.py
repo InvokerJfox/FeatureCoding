@@ -7,7 +7,7 @@ class MappingOneHotEncoder:
     """
 
     @staticmethod
-    def expand(older: MappingOneHotCoder, records: list) -> MappingOneHotCoder:
+    def extend(older: MappingOneHotCoder, records: list) -> MappingOneHotCoder:
         """
         对编码器追加特征
         :param older: 旧编码器
@@ -21,7 +21,7 @@ class MappingOneHotEncoder:
             start = str(value[start_key])
             target = str(value[target_key])
             codes.setdefault(start_key + start + target_key + target, {start_key: start, target_key: target})
-        older.descriptions.append(records)
+        older.descriptions.extend(records)
 
         return older
 
@@ -36,7 +36,7 @@ class MappingOneHotEncoder:
         :return:
         """
         coder = MappingOneHotCoder(passport, [], start_key, target_key, {})
-        return MappingOneHotEncoder.expand(coder, records)
+        return MappingOneHotEncoder.extend(coder, records)
 
     @staticmethod
     def coding(coder: MappingOneHotCoder, data: list, start_key="from", target_key="to") -> list:

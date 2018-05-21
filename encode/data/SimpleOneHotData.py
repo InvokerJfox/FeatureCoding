@@ -1,3 +1,6 @@
+import numpy as np
+from numpy import array
+
 from encode.coder.SimpleOneHotCoder import SimpleOneHotCoder
 from encode.encoder.SimpleOneHotEncoder import SimpleOneHotEncoder
 
@@ -14,14 +17,14 @@ class SimpleOneHotData:
         """
         super().__init__()
         self.coder = coder
+        self.data = array(())
         self.description = []
-        self.data = []
 
     def append(self, data: list):
         """
         添加新数据
-        :param data:原始数据
+        :param data:待新增数据
         :return:
         """
-        self.description.append(data)
-        self.data.append(SimpleOneHotEncoder.coding(self.coder, data))
+        self.description.extend(data)
+        self.data = np.append(self.data, SimpleOneHotEncoder.coding(self.coder, data))
