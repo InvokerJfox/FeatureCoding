@@ -20,9 +20,9 @@ class SimpleOneHotData:
     def append(self, data: list, code_dict: str):
         """
         添加新数据
-        :param data:
-        :param code_dict:
+        :param data:原始数据
+        :param code_dict:需要编码的维度
         :return:
         """
-        self.description = data
+        self.description.append(data)
         self.data.append(SimpleOneHotEncoder.coding(self.coder, data, code_dict))

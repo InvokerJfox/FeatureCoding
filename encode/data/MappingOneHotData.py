@@ -20,10 +20,10 @@ class MappingOneHotData:
     def append(self, data: list, start_key="from", target_key="to"):
         """
         添加新数据
-        :param data:
-        :param start_key:
-        :param target_key:
+        :param data:原始数据
+        :param start_key:起始映射维度
+        :param target_key:目标映射维度
         :return:
         """
-        self.description = data
+        self.description.append(data)
         self.data.append(MappingOneHotEncoder.coding(self.coder, data, start_key=start_key, target_key=target_key))
