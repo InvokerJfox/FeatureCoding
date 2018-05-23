@@ -10,40 +10,46 @@ class OneHotEncoder(Encoder):
     """
 
     @staticmethod
-    def coder(records: list, coder=None, code_keys=None) -> OneHotCoder:
+    def coder(records: list, coder=None, code_dimensions=None) -> OneHotCoder:
         """
-        通过特征生成一个简单的独热编码器,coder和code_keys至少一个不为空
+        通过特征生成一个简单的独热编码器,coder和code_dimensions至少一个不为空
         :param records: 编码的所有记录(含说明)
         :param coder: 编码器
-        :param code_keys: 记录中编码的字段名
+        :param code_dimensions: 记录中编码的字段名
         :return:
         """
+        # coder和code_dimensions其一不为空
         if coder is None:
-            if code_keys is not None:
-                coder = OneHotCoder(code_keys)
+            if code_dimensions is not None:
+                coder = OneHotCoder(code_dimensions)
             else:
-                raise ValueError("'coder' and 'code_keys',at least one is not empty")
-        # 追加记录
-        coder.descriptions.extend(records)
+                raise ValueError("'coder' and 'code_dimensions' at least one is not empty")
+
+        # 对所有数据进行编码
         # 获取编码维度
         code_dimensions = coder.dimensions
-        # 新增编码:维度+值
+        # 获取原编码 & 原编码索引
         codes = coder.codes.tolist()  # type:list
-        # 每个记录
-        for record in records:  # type:dict
-            for code_key in code_dimensions:
-                # 获取维度值
-                code = code_key + str(record[code_key])
-                codes.extend([code])
+        code_indexes = coder.code_indexes  # type:dict
+        # 记录新编码反射索引
+        start_index = len(code_indexes)
+        # 访问每个新记录,当不存在时,添加该编码及反射索引
+        for record_index in range(len(records)):
+            record = records[record_index]  # type:dict
+            for code_key in code_dimensions:  # type:str
+                # 编码
+                code = coder.combiner.combine([code_key, str(record[code_key])])
+                # 判断是否存在/添加
+                if code not in code_indexes:
+                    codes.extend([code])
+                    code_indexes[code] = start_index + record_index
         # 扩展新增至编码结果
         coder.codes = array(codes)
 
         # 重建倒索引
         coder.code_indexes = dict(zip(codes, range(len(codes))))
-
-        # 若出现重复定义，索引数不等于数据量，则抛出异常
-        if len(codes) != len(coder.code_indexes):
-            raise ValueError('input repeat records to coder')
+        # 追加输入记录(可能含重复的定义)
+        coder.descriptions.extend(records)
 
         return coder
 
@@ -74,16 +80,17 @@ class OneHotEncoder(Encoder):
             # 依次对比编码对象,匹配成功则匹配下一个
             codes_index = 0
             for code_dimension in code_dimensions:
-                # 编码格式:维度+值
-                value = code_dimension + str(record[code_dimension])
+                # 编码:
+                code = coder.combiner.combine([code_dimension, str(record[code_dimension])])
                 onehot.append(code_dimension)
                 onehot.append(str(record[code_dimension]))
                 while codes_index < codes_size:
                     # 若值与编码匹配则标记，且不再查找下一编码
-                    if value == codes[codes_index]:
+                    if code == codes[codes_index]:
                         coded[record_index, codes_index] = 1
                         break
                     codes_index += 1
             # 存储独热唯一码
-            record.setdefault(coder.onehot_ukid, coder.combiner.combine(onehot))
+            record[coder.onehot_ukid] = coder.combiner.combine(onehot)
+
         return coded.tolist()

@@ -40,6 +40,6 @@ class OneHotData(Data):
         onehots = map(lambda x: x[self.coder.onehot_ukid], records)
         self.coded_indexes = dict(zip(list(onehots), range(len(records))))
 
-        # 若出现重复定义，索引数不等于数据量，则抛出异常
+        # 若出现重复定义:索引数不等于数据量，则抛出异常
         if len(records) != len(self.coded_indexes):
-            raise ValueError('input repeat records to coder')
+            raise ValueError('input repeat records into coder')

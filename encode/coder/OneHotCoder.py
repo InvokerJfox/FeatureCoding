@@ -9,7 +9,6 @@ class OneHotCoder(Coder):
         单个对象的独热编码表
         1.值可以是具有唯一特性的数值,字符串等，满足3范式
         2.每一行表示一条记录,每一列表示一个维度，这些维度及其值是完全不相关的
-        3.编码输入值不允许重复(不可重定义)
     """
 
     def __init__(self, dimensions: set, combiner=DefaultCombiner):
@@ -27,5 +26,5 @@ class OneHotCoder(Coder):
         self.descriptions = []
         # 编码表
         self.codes = array(())
-        # 编码后的数据(唯一)倒索引
+        # 编码后的数据倒索引(第一次出现的位置)
         self.code_indexes = {}
