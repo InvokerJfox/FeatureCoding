@@ -2,6 +2,7 @@ from numpy import array
 
 from encode.coder.OneHotCoder import OneHotCoder
 from encode.coded.Coded import Coded
+from encode.list.UniqueList import UniqueList
 
 
 class OneHotCoded(Coded):
@@ -18,6 +19,6 @@ class OneHotCoded(Coded):
         """
         super().__init__()
         self.coder = coder  # 编码器
-        self.descriptions = []  # 编码原数据及编码结果
+        self.descriptions = UniqueList(coder.identifier)  # 编码原数据及编码结果
         self.coded = array(())  # 编码后的数据:{编码后状态值}
         self.coded_indexes = {}  # 通过编码唯一码反射原数据/编码数据索引,编码值一

@@ -18,8 +18,8 @@ class OneHotEncoder(Encoder):
         通过特征生成一个简单的独热编码器,coder和code_dimensions至少一个不为空
         可增量编译，但增量数据在全局数据中仍具有唯一性
         :param records: 增量编码记录(与原数据不相关)
-        :param coder: 编码器
         :param identifier: 识别器
+        :param coder: 编码器
         :param projector: 投影仪
         :return:
         """
