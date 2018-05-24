@@ -1,6 +1,6 @@
 from encode.coder.Coder import Coder
 from encode.combiner.DefaultCombiner import DefaultCombiner
-from encode.identifier.OneHotIdentifier import OneHotIdentifier
+from encode.identifier.DefaultIdentifier import DefaultIdentifier
 from encode.list.UniqueList import UniqueList
 from encode.projector.DimensionProjector import DimensionProjector
 
@@ -12,7 +12,7 @@ class OneHotCoder(Coder):
         2.每一行表示一条记录,每一列表示一个维度，这些维度及其值是完全不相关的
     """
 
-    def __init__(self, identifier: OneHotIdentifier, projector: DimensionProjector, combiner=DefaultCombiner):
+    def __init__(self, identifier: DefaultIdentifier, projector: DimensionProjector, combiner=DefaultCombiner):
         """
         初始化一个独热编码表
         :param identifier: 识别器:解释数据

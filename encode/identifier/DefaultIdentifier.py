@@ -1,11 +1,11 @@
 from encode.identifier.Identifier import Identifier
 
 
-class OneHotIdentifier(Identifier):
+class DefaultIdentifier(Identifier):
     def __init__(self, encode_dimensions: list, feature_dimensions=None, counting_dimensions=None):
         """
         数据识别
-        :param encode_dimensions: 编码维度:压缩识别，生成onehot唯一码
+        :param encode_dimensions: 编码维度:压缩识别
         :param feature_dimensions: 特征维度:压缩后保留的维度,若压缩后存在多个不同值,则提报警告
         :param counting_dimensions: 统计维度:压缩后将该维度进行值累计(累加)
         """
