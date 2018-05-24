@@ -1,8 +1,7 @@
-from numpy import array
-
 from encode.coder.Coder import Coder
 from encode.combiner.DefaultCombiner import DefaultCombiner
 from encode.identifier.OneHotIdentifier import OneHotIdentifier
+from encode.list.UniqueList import UniqueList
 from encode.projector.DimensionProjector import DimensionProjector
 
 
@@ -28,9 +27,11 @@ class OneHotCoder(Coder):
         # 编码组合器
         self.combiner = combiner
         # 原始数据
-        self.descriptions = []
+        self.descriptions = UniqueList(identifier)
         # 多维编码(函数映射)
         self.protects = []
+        # 反向索引,多维编码对应维度的索引
+        self.protect_indexes = {}
         # 唯一编码
         self.codes = []
         # 反向索引,唯一编码(高维哈希)对应记录的索引

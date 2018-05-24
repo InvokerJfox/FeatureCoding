@@ -1,61 +1,55 @@
-import array
+from numpy import zeros
 
 from encode.combiner.DefaultCombiner import DefaultCombiner
 
 
 class DimensionProjector:
     """
-    数据按值进行投影
+    数据按值进行多维投影
     """
 
     @staticmethod
-    def mapping(records: list, dimensions: list, older: list, combiner=DefaultCombiner) -> list:
+    def mapping(records: list, dimensions: list, older: list, combiner=DefaultCombiner):
         """
         访问每个记录(records),以维度+值(record[dimension])的方式将编码添加至原编码结果(older)中
-        并该次数据的编码结果返回
         :param records:
         :param dimensions:
         :param older:
         :param combiner:
         :return:
         """
-        newer = []
         for record in records:  # type:dict
-            # 唯一码
-            mapped = []
+            # 所有维度
             for dimension in dimensions:  # type:str
                 # 投影码
                 project = combiner.combine([dimension, str(record[dimension])])
                 # 判断是否存在
                 if project not in older:
                     older.extend([project])
-                # 该批次数据的映射结果
-                mapped.extend(project)
-            # 保存映射结果
-            newer.extend(mapped)
-
-        return newer
 
     @staticmethod
-    def match(benchmark, records: list, output: array):
+    def match(records: list, dimensions: list, benchmark: dict, older: list, combiner=DefaultCombiner):
         """
-        将数据(records,benchmark同序)基于benchmark进行映射,将结果存储在output中
-        output中值为1时表示存在
-        :param benchmark:
+        将数据的维度信息(records+dimensions)基于benchmark进行映射,将结果存储在older中
+        并该次数据的编码结果返回
         :param records:
-        :param output:
+        :param dimensions:
+        :param benchmark:
+        :param older:二维数组
+        :param combiner:
         :return:
         """
         # 依次对比编码对象,匹配成功则匹配下一个
-        benchmark_size = len(benchmark)
-        benchmark_index = 0
         for record in records:
-            # 编码:
-            while benchmark_index < benchmark_size:
-                # 若值与编码匹配则标记，且不再查找下一编码
-                if record == benchmark[benchmark_index]:
-                    output[benchmark_index] = 1
-                    break
-                benchmark_index += 1
+            # 编码结果
+            record_coded = zeros((len(benchmark)))
+            # 所有维度
+            for dimension in dimensions:
+                # 维度映射码
+                project = combiner.combine([dimension, str(record[dimension])])
+                project_index = benchmark[project]
+                # 将该标识码置1
+                record_coded[project_index] = 1
 
-        return output
+            # 新增该记录
+            older.extend([record_coded])

@@ -17,3 +17,12 @@ class UniqueList(list):
     def extend(self, other: list):
         super().extend(CountingCompressor.compress(other, self.identifier))
 
+    def increment(self, other: list) -> list:
+        """
+        自身并上该集合，并返回增量集合
+        :param other:
+        :return:
+        """
+        inc = list(set(other) - set(self))
+        super().extend(inc)
+        return inc

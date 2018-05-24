@@ -2,14 +2,13 @@ from numpy import array
 
 from encode.coder.OneHotCoder import OneHotCoder
 from encode.coded.Coded import Coded
-from encode.encoder.OneHotEncoder import OneHotEncoder
 
 
 class OneHotCoded(Coded):
     """
     用于存储独热编码后的数据
     注:1.输入值不允许重复(不可重定义)
-    2.不允许使用onehot字段，其被作为编码结果唯一码使用
+    2.仅存储具有唯一性的数据
     """
 
     def __init__(self, coder: OneHotCoder):
@@ -22,24 +21,3 @@ class OneHotCoded(Coded):
         self.descriptions = []  # 编码原数据及编码结果
         self.coded = array(())  # 编码后的数据:{编码后状态值}
         self.coded_indexes = {}  # 通过编码唯一码反射原数据/编码数据索引,编码值一
-
-    def append(self, records: list):
-        """
-        添加新数据
-        :param records:待新增的数据
-        :return:
-        """
-        # 新增数据
-        self.descriptions.extend(records)
-        # 新增编码结果
-        coded = self.coded.tolist()  # type:list
-        coded.extend(OneHotEncoder.coding(self.coder, records))
-        self.coded = array(coded, dtype=int)
-
-        # 重置反射索引
-        onehots = map(lambda x: x[self.coder.identifier.onehot_dimension], records)
-        self.coded_indexes = dict(zip(list(onehots), range(len(records))))
-
-        # 若出现重复定义:索引数不等于数据量，则抛出异常
-        if len(records) != len(self.coded_indexes):
-            raise ValueError('input repeat records into coder')
