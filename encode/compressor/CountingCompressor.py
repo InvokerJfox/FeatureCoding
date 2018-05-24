@@ -1,5 +1,5 @@
 from encode.combiner.DefaultCombiner import DefaultCombiner
-from encode.compress.Compressor import Compressor
+from encode.compressor.Compressor import Compressor
 from encode.identifier.Identifier import Identifier
 
 
@@ -53,7 +53,7 @@ class CountingCompressor(Compressor):
                 for feature in feature_dimensions:
                     # 若出现重复特征值则警告
                     if value[feature] != record[feature]:
-                        print("WARMING: compressed data's %s has different values: old:%s → new:%s" % (
+                        print("WARMING: compressed coded's %s has different values: old:%s → new:%s" % (
                             feature, value[feature], record[feature]))
 
                 # 累加统计值

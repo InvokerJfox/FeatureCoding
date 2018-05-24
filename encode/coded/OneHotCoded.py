@@ -1,11 +1,11 @@
 from numpy import array
 
 from encode.coder.OneHotCoder import OneHotCoder
-from encode.data.Data import Data
+from encode.coded.Coded import Coded
 from encode.encoder.OneHotEncoder import OneHotEncoder
 
 
-class OneHotData(Data):
+class OneHotCoded(Coded):
     """
     用于存储独热编码后的数据
     注:1.输入值不允许重复(不可重定义)
@@ -26,7 +26,7 @@ class OneHotData(Data):
     def append(self, records: list):
         """
         添加新数据
-        :param records:待新增数据
+        :param records:待新增的数据
         :return:
         """
         # 新增数据
@@ -37,7 +37,7 @@ class OneHotData(Data):
         self.coded = array(coded, dtype=int)
 
         # 重置反射索引
-        onehots = map(lambda x: x[self.coder.onehot_ukid], records)
+        onehots = map(lambda x: x[self.coder.identifier.onehot_dimension], records)
         self.coded_indexes = dict(zip(list(onehots), range(len(records))))
 
         # 若出现重复定义:索引数不等于数据量，则抛出异常
