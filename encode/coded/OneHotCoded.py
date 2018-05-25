@@ -1,7 +1,7 @@
 from numpy import array
 
-from encode.coder.OneHotCoder import OneHotCoder
 from encode.coded.Coded import Coded
+from encode.coder.OneHotCoder import OneHotCoder
 from encode.list.CountingList import CountingList
 
 
