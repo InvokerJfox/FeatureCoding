@@ -1,37 +1,40 @@
-from encode.data.MappingOneHotData import MappingOneHotData
-from encode.data.SimpleOneHotData import SimpleOneHotData
-from encode.encoder import IterativeRouteEncoder
-from encode.encoder.MappingOntHotEncoder import MappingOneHotEncoder
-from encode.encoder.SimpleOneHotEncoder import SimpleOneHotEncoder
+from encode.compressor.CountingCompressor import CountingCompressor
+from encode.encoder.OneHotEncoder import OneHotEncoder
 from encode.example.data.record import CommonRecords
+from encode.interpreter.CountingInterpreter import CountingInterpreter
+from encode.list.CountingList import CountingList
 
-# qualitySimpleCoder = SimpleOneHotEncoder.register("quality_common_code", CommonRecords.define_quality, "defined")
-# print(qualitySimpleCoder.codes)
-# print(qualitySimpleCoder.description)
+interpreter = CountingInterpreter(CommonRecords.encodes, feature_dimensions=CommonRecords.features,
+                                  counting_dimensions=CommonRecords.countings)
+compressor = CountingCompressor(interpreter)
+compressed = CountingList(compressor)
+compressed.extend(CommonRecords.goods1)
+compressed.extend(CommonRecords.goods2)
+
+qualitySimpleCoder = OneHotEncoder.coder(compressed)
+print("protects=%s" % qualitySimpleCoder.protects)
+print("protect_indexes=%s" % qualitySimpleCoder.protect_indexes)
+print("codes=%s" % qualitySimpleCoder.codes)
+print("code_indexes=%s" % qualitySimpleCoder.code_indexes)
+print("descriptions_data=%s" % qualitySimpleCoder.descriptions.data)
+
+qualityCoded = OneHotEncoder.coding(compressed, qualitySimpleCoder)
+print("coded=%s" % qualityCoded.coded)
+print("coded_indexes=%s" % qualityCoded.coded_indexes)
+print("descriptions_data=%s" % qualityCoded.descriptions.data)
+
+# qualityInterpreter = RouteInterpreter(vertex_state_code_keys=["quality"], edge_start_key="from", edge_target_key="to")
+# qualityGraphCoder = RouteEncoder.coder(CommonRecords.goods, interpreter=qualityInterpreter)
 #
-# qualityData = SimpleOneHotData(qualitySimpleCoder)
-# qualityData.append(CommonRecords.goods, 'quality')
-# print(qualityData.data)
-# print(qualityData.description)
-
-# qualityMappingCoder = MappingOneHotEncoder.register("quality_mapping_code", CommonRecords.define_operations,
-#                                                     start_key="from", target_key="to")
-# print("codes:%s" % qualityMappingCoder.codes)
-# print("codes description:%s" % qualityMappingCoder.description)
+# print("vertices=%s" % qualityGraphCoder.vertices)
+# print("vertex_descriptions=%s" % qualityGraphCoder.vertex_descriptions)
+# print("vertex_indexes=%s" % qualityGraphCoder.vertex_indexes)
+# print("edges=%s" % qualityGraphCoder.edges)
+# print("edges_descriptions=%s" % qualityGraphCoder.edge_descriptions)
 #
-# jobsData = MappingOneHotData(qualityMappingCoder)
-# jobsData.append(CommonRecords.jobs, start_key="from", target_key="to")
+# qualityGraphData = RouteData(qualityGraphCoder)
+# qualityGraphData.append_vertices(CommonRecords.jobs)
+# qualityGraphData.append_edges(CommonRecords.jobs)
 #
-# print("data:%s" % jobsData.data)
-# print("data description:%s" % jobsData.description)
-
-qualityGraphCoder = IterativeRouteEncoder.register("quality_mapping_code", CommonRecords.define_operations,
-                                                   start_key="from", target_key="to")
-print("codes:%s" % qualityGraphCoder.codes)
-print("codes description:%s" % qualityGraphCoder.description)
-
-qualityGraphData = MappingOneHotData(qualityGraphCoder)
-qualityGraphData.append(CommonRecords.jobs, start_key="from", target_key="to")
-
-print("data:%s" % qualityGraphData.data)
-print("data description:%s" % qualityGraphData.description)
+# print("coded=%s" % qualityGraphData.coded)
+# print("coded description=%s" % qualityGraphData.description)
