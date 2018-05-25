@@ -20,7 +20,7 @@ class DefaultCombiner(Combiner):
             res = keys[0]  # type:str
 
         for s in keys[1:]:
-            res = res + sp + s
+            res = res + sp + str(s)
 
         return res
 
