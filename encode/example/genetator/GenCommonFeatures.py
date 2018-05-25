@@ -1,6 +1,6 @@
 from encode.compressor.CountingCompressor import CountingCompressor
 from encode.encoder.OneHotEncoder import OneHotEncoder
-from encode.example.data.record import CommonRecords
+from encode.example.record import CommonRecords
 from encode.interpreter.CountingInterpreter import CountingInterpreter
 from encode.list.CountingList import CountingList
 
