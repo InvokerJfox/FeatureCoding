@@ -15,5 +15,5 @@ class MappingCoder(Coder):
         :param compressor: 压缩器:压缩数据
         """
         super().__init__(compressor)
-        # 状态数据(唯一编码)
-        self.states = []
+        # 状态的唯一编码
+        self.state_codes = []
