@@ -12,8 +12,8 @@ class Coded:
         # 数据编码器
         self.coder = coder
         # 编码原数据:{编码后数据的索引:原始数据}
-        self.descriptions = CountingList(coder.compressor)
+        self.records = CountingList()
         # 数据的唯一编码
-        self.coded = []
+        self.uniques = []
         # 数据唯一编码的反向索引
-        self.coded_indexes = {}
+        self.unique_indexes = {}

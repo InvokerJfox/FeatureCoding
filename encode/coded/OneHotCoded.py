@@ -2,7 +2,6 @@ from numpy import array
 
 from encode.coded.Coded import Coded
 from encode.coder.OneHotCoder import OneHotCoder
-from encode.list.CountingList import CountingList
 
 
 class OneHotCoded(Coded):
@@ -20,5 +19,3 @@ class OneHotCoded(Coded):
         super().__init__(coder)
         # 数据的多维编码(函数映射)结果,格式如:[[0,0,1],[1,0,0]]
         self.protect_coded = array(())
-        # 多维编码(函数映射)的反向数据索引
-        self.protect_coded_indexes = {}

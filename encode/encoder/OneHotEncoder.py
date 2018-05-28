@@ -2,94 +2,107 @@ from numpy import array
 
 from encode.coded.OneHotCoded import OneHotCoded
 from encode.coder.OneHotCoder import OneHotCoder
-from encode.encoder.Encoder import Encoder
-from encode.list.CountingList import CountingList
+from encode.encoder.IEncoder import IEncoder
 from encode.projector.DimensionProjector import DimensionProjector
 
 
-class OneHotEncoder(Encoder):
+class OneHotEncoder(IEncoder):
     """
         定义编码规模,对数据进行one-hot编码(0/1编码)
     """
 
-    @staticmethod
-    def coder(records: CountingList, coder=None, projector=DimensionProjector) -> OneHotCoder:
+    def __init__(self, compressor, projector=DimensionProjector):
+        # 初始化空的编码器和编码结果
+        self.coder = OneHotCoder(compressor, projector)
+        self.coded = OneHotCoded(self.coder)
+
+    def code(self, records: list):
         """
-        通过特征生成一个简单的独热编码器,coder和code_dimensions至少一个不为空
-        可增量编译，但增量数据在全局数据中仍具有唯一性
+        增量编译数据，生成编码结果
         :param records: 增量编码记录(与原数据不相关)
-        :param coder: 编码器
-        :param projector: 投影仪
         :return:
         """
-        # coder和code_dimensions其一不为空
-        if coder is None:
-            coder = OneHotCoder(records.compressor, projector)
-        else:
-            # 增量更新时，仅处理增量数据
-            records = coder.descriptions.increment(records)
-        # 待编码数据
-        data = records.tolist()
-        # 获取多维投影仪
-        projector = coder.projector  # type:DimensionProjector
-        # 获取已存在多维编码
-        protects = coder.protects  # type:list
-        # 获取编码维度
-        encode_dimensions = coder.compressor.interpreter.encode_dimensions  # type:list
+        # 读取编码器
+        coder = self.coder
+        # 读取压缩器
+        compressor = coder.compressor
 
-        # 对新数据进行多维编码 & 更新
-        projector.mapping(data, encode_dimensions, protects)
+        # 全量压缩
+        older = coder.records.tolist()
+        older.extend(records)
+        compressed = compressor.compress(older)
+        # 存储
+        coder.records = compressed
 
-        # 重置多维反射索引
-        coder.protect_indexes = dict(zip(protects, range(len(protects))))
+        # 获取原编码结果
+        uniques = coder.uniques
+        # 新旧编码长度不等则新增编码/维度码,对增量(所处的新数据)进行编码
+        if len(uniques) != len(compressed.uniques):
+            # 获取多维投影仪
+            projector = coder.projector  # type:DimensionProjector
+            # 获取编码维度
+            encode_dimensions = coder.compressor.interpreter.encode_dimensions  # type:list
+            # 获取原多维映射码
+            protects = coder.protects  # type:list
+            # 对新数据进行多维编码 & 更新
+            projector.mapping(records, encode_dimensions, protects)
+            # 重置多维反射索引
+            coder.protect_indexes = dict(zip(protects, range(len(protects))))
 
-        # 添加唯一索引
-        onehot_dimension = coder.compressor.interpreter.onehot_dimension
-        new_codes = map(lambda x: x[onehot_dimension], data)
-        coder.codes.extend(new_codes)
+            # 更新唯一编码结果
+            coder.uniques = compressed.uniques
+            # 重置多维反射索引
+            coder.unique_indexes = dict(zip(coder.uniques, range(len(coder.uniques))))
 
-        # 重置多维反射索引
-        coder.code_indexes = dict(zip(coder.codes, range(len(coder.codes))))
-
-        # 追加记录
-        coder.descriptions.extend(data)
-
-        return coder
-
-    @staticmethod
-    def coding(records: CountingList, coder: OneHotCoder, coded=None) -> OneHotCoded:
+    def coding(self, records: list):
         """
-        将数据生成独热编码，并将其作为唯一标识放入数据中
-        :param records:
-        :param coder:
-        :param coded:
+        数据增量生成独热编码、投影码;并保存在Coded对象中
+        :param records:增量编码记录(与原数据不相关)
         :return:
         """
-        # 不存在则初始化编码结果
-        if coded is None:
-            coded = OneHotCoded(coder)
-        # 待处理数据
-        data = records.tolist()
-        # 获取多维投影仪
-        projector = coder.projector
-        # 获取已存在多维编码
-        protect_indexes = coder.protect_indexes  # type:dict
-        # 获取编码维度
-        encode_dimensions = coder.compressor.interpreter.encode_dimensions  # type:list
-        # 获取已存在数据
-        cd = coded.coded.tolist()  # type:array
+        # 获取编码器
+        coder = self.coder
+        # 读取压缩器
+        compressor = coder.compressor
+        # 获取解释器
+        interpreter = compressor.interpreter
+        # 获取已编码结果
+        coded = self.coded
 
-        # 对所有新数据进行编码
-        projector.match(data, encode_dimensions, protect_indexes, cd)
+        # 全量压缩
+        older = coded.records.tolist()
+        older.extend(records)
+        compressed = compressor.compress(older)
+        # 存储
+        coded.records = compressed
 
-        # 存储编码结果
-        coded.coded = array(cd, dtype=int)
+        # 获取原编码结果
+        uniques = coded.uniques
+        # 新旧数据长度不等则对新"投影编码",对增量(验证新数据是否存在于旧数据中)进行编码
+        if len(uniques) != len(compressed.uniques):
+            # 获取多维投影仪
+            projector = coder.projector
+            # 获取编码维度
+            encode_dimensions = coder.compressor.interpreter.encode_dimensions  # type:list
+            # 获取多维编码
+            protect_indexes = coder.protect_indexes  # type:dict
+            # 获取已进行编码的数据
+            protect_coded = coded.protect_coded.tolist()  # type:list
 
-        # 重置反射索引
-        onehots = map(lambda x: x[coder.compressor.interpreter.onehot_dimension], data)
-        coded.coded_indexes = dict(zip(list(onehots), range(len(data))))
+            # 新数据进行编码
+            increments = compressor.compress(records).tolist()
+            for record in increments:
+                # 若该数据不在已投影数据中
+                if interpreter.onehot(record) not in coded.uniques:
+                    # 对该新数据进行多维编码
+                    projector.match([record], encode_dimensions, protect_indexes, protect_coded)
 
-        # 增加新增数据
-        coded.descriptions = records
+            # 存储编码结果
+            coded.protect_coded = array(protect_coded, dtype=int)
 
-        return coded
+            # 更新唯一编码结果
+            coded.uniques = compressed.uniques
+            # 重置多维反射索引
+            coded.unique_indexes = dict(zip(coded.uniques, range(len(coded.uniques))))
+
+            self.coded = coded

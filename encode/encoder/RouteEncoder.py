@@ -1,7 +1,7 @@
 from numpy import zeros
 from numpy import array
 from encode.coder.RouteCoder import RouteCoder
-from encode.encoder.Encoder import Encoder
+from encode.encoder.IEncoder import IEncoder
 
 
 class RouteEncoder(Encoder):

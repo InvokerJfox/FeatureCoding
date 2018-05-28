@@ -1,11 +1,11 @@
 from numpy import array
 
 from encode.coder.MappingCoder import MappingCoder
-from encode.encoder.Encoder import Encoder
+from encode.encoder.IEncoder import IEncoder
 from encode.list.CountingList import CountingList
 
 
-class MappingEncoder(Encoder):
+class MappingEncoder(IEncoder):
     """
         定义编码规模,对数据进行映射型one-hot编码
         1.首先将所有状态基于压缩器进行唯一编码(onehotid)
@@ -14,7 +14,7 @@ class MappingEncoder(Encoder):
     """
 
     @staticmethod
-    def coder(records: CountingList, identifier=None, coder=None) -> MappingCoder:
+    def coder(records: list, identifier=None, coder=None) -> MappingCoder:
         """
         通过特征生成一个映射型编码器
         :param records: 增量编码记录(与原数据不相关)
@@ -74,7 +74,7 @@ class MappingEncoder(Encoder):
         return coder
 
     @staticmethod
-    def coding(coder: MappingCoder, state: list, mapping: list) -> list:
+    def coding(coder: list, state: list, mapping: list) -> list:
         """
         基于状态及映射关系进行编码效验并返回编码结果
         :param coder:

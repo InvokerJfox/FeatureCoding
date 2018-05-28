@@ -1,6 +1,7 @@
 from encode.combiner.DefaultCombiner import DefaultCombiner
 from encode.compressor.Compressor import Compressor
 from encode.interpreter.CountingInterpreter import CountingInterpreter
+from encode.list.CountingList import CountingList
 
 
 class CountingCompressor(Compressor):
@@ -11,12 +12,16 @@ class CountingCompressor(Compressor):
         """
         super().__init__(interpreter, combiner)
 
-    def compress(self, records: list) -> list:
+    def compress(self, records: list) -> CountingList:
         """
         将原数据(records)按指定维度(encode_dimensions)进行相同值合并,合并时仅保留统计维度(counting_dimensions),并舍弃其他维度
         :param records: list[dict]
-        :return:
+        :return:计数列表
         """
+
+        # 计数列表
+        cl = CountingList()
+
         # 解释器
         interpreter = self.interpreter  # type :CountingInterpreter
 
@@ -63,4 +68,8 @@ class CountingCompressor(Compressor):
                 for counting in counting_dimensions:
                     value[counting] += record[counting]
 
-        return list(uniques.values())
+        # 唯一码字典
+        cl.data = list(uniques.values())
+        cl.uniques = set(uniques.keys())
+
+        return cl
