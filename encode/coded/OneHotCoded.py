@@ -17,8 +17,8 @@ class OneHotCoded(Coded):
         初始化一个编码结果存储单元
         :param coder:编码表
         """
-        super().__init__()
-        self.coder = coder  # 编码器
-        self.descriptions = CountingList(coder.compressor)  # 编码原数据及编码结果
-        self.coded = array(())  # 编码后的数据,格式如:[[0,0,1],[1,0,0]]
-        self.coded_indexes = {}  # 通过编码唯一码反射原数据/编码数据索引,编码值一
+        super().__init__(coder)
+        # 数据的多维编码(函数映射)结果,格式如:[[0,0,1],[1,0,0]]
+        self.protect_coded = array(())
+        # 多维编码(函数映射)的反向数据索引
+        self.protect_coded_indexes = {}
