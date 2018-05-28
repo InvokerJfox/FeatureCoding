@@ -1,5 +1,4 @@
 from encode.coder.Coder import Coder
-from encode.combiner.DefaultCombiner import DefaultCombiner
 from encode.compressor.CountingCompressor import CountingCompressor
 
 
