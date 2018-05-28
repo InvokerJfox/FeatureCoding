@@ -14,6 +14,6 @@ class Coder:
         # 原始数据
         self.records = CountingList(compressor)
         # 唯一编码
-        self.codes = []
+        self.uniques = []
         # 反向索引,唯一编码对应记录的索引
-        self.code_indexes = {}
+        self.unique_indexes = {}
