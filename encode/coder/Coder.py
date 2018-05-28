@@ -12,7 +12,7 @@ class Coder:
         # 数据识别器
         self.compressor = compressor
         # 原始数据
-        self.records = CountingList(compressor)
+        self.records = CountingList()
         # 唯一编码
         self.uniques = []
         # 反向索引,唯一编码对应记录的索引
