@@ -2,21 +2,28 @@ from numpy import array
 
 from encode.coded.OneHotCoded import OneHotCoded
 from encode.coder.OneHotCoder import OneHotCoder
+from encode.compressor.CountingCompressor import CountingCompressor
 from encode.encoder.IEncoder import IEncoder
+from encode.list.CountingList import CountingList
 from encode.projector.DimensionProjector import DimensionProjector
 
 
 class OneHotEncoder(IEncoder):
     """
-        定义编码规模,对数据进行one-hot编码(0/1编码)
+        对数据进行one-hot编码(0/1编码)
     """
 
-    def __init__(self, compressor, projector=DimensionProjector):
+    def __init__(self, compressor: CountingCompressor, projector=DimensionProjector):
+        """
+
+        :param compressor:
+        :param projector:
+        """
         # 初始化空的编码器和编码结果
         self.coder = OneHotCoder(compressor, projector)
         self.coded = OneHotCoded(self.coder)
 
-    def code(self, records: list):
+    def coding(self, records: list):
         """
         增量编译数据，生成编码结果
         :param records: 增量编码记录(与原数据不相关)
@@ -54,7 +61,7 @@ class OneHotEncoder(IEncoder):
             # 重置多维反射索引
             coder.unique_indexes = dict(zip(coder.uniques, range(len(coder.uniques))))
 
-    def coding(self, records: list):
+    def encoding(self, records: list):
         """
         数据增量生成独热编码、投影码;并保存在Coded对象中
         :param records:增量编码记录(与原数据不相关)
@@ -87,7 +94,7 @@ class OneHotEncoder(IEncoder):
             # 获取多维编码
             protect_indexes = coder.protect_indexes  # type:dict
             # 获取已进行编码的数据
-            protect_coded = coded.protect_coded.tolist()  # type:list
+            protect_coded = coded.protect_uniques.tolist()  # type:list
 
             # 新数据进行编码
             increments = compressor.compress(records).tolist()
@@ -98,7 +105,7 @@ class OneHotEncoder(IEncoder):
                     projector.match([record], encode_dimensions, protect_indexes, protect_coded)
 
             # 存储编码结果
-            coded.protect_coded = array(protect_coded, dtype=int)
+            coded.protect_uniques = array(protect_coded, dtype=int)
 
             # 更新唯一编码结果
             coded.uniques = compressed.uniques

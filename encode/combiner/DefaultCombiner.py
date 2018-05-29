@@ -1,7 +1,7 @@
-from encode.combiner.Combiner import Combiner
+from encode.combiner.ICombiner import ICombiner
 
 
-class DefaultCombiner(Combiner):
+class DefaultCombiner(ICombiner):
     """
     默认的编码组合器
     """

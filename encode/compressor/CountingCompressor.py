@@ -2,6 +2,7 @@ from encode.combiner.DefaultCombiner import DefaultCombiner
 from encode.compressor.Compressor import Compressor
 from encode.interpreter.CountingInterpreter import CountingInterpreter
 from encode.list.CountingList import CountingList
+from encode.code.DimensionCode import DimensionCode
 
 
 class CountingCompressor(Compressor):
@@ -37,9 +38,7 @@ class CountingCompressor(Compressor):
             # 取唯一码，不存在时用组合器生成
             onehot = interpreter.onehot(record)
             if onehot is None:
-                values = list(encodes.keys())
-                values.extend(encodes.values())
-                onehot = self.combiner.combine(values)
+                onehot = DimensionCode.code(encodes)
 
             # 若不存在该记录则更新
             if onehot not in uniques:

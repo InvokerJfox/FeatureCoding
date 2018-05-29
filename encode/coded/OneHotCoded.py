@@ -18,4 +18,4 @@ class OneHotCoded(Coded):
         """
         super().__init__(coder)
         # 数据的多维编码(函数映射)结果,格式如:[[0,0,1],[1,0,0]]
-        self.protect_coded = array(())
+        self.protect_uniques = array(())

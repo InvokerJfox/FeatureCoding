@@ -9,7 +9,7 @@ class Coder:
 
     def __init__(self, compressor: CountingCompressor):
         super().__init__()
-        # 数据识别器
+        # 数据压缩器
         self.compressor = compressor
         # 原始数据
         self.records = CountingList()

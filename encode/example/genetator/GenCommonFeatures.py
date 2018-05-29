@@ -1,31 +1,47 @@
 from encode.compressor.CountingCompressor import CountingCompressor
+from encode.encoder.MappingEncoder import MappingEncoder
 from encode.encoder.OneHotEncoder import OneHotEncoder
 from encode.example.record import CommonRecords
 from encode.interpreter.CountingInterpreter import CountingInterpreter
+from encode.interpreter.MappingInterpreter import MappingInterpreter
 from encode.list.CountingList import CountingList
 
-interpreter = CountingInterpreter(CommonRecords.encodes, feature_dimensions=CommonRecords.features,
-                                  counting_dimensions=CommonRecords.countings)
-compressor = CountingCompressor(interpreter)
-compressed = CountingList(compressor)
-compressed.extend(CommonRecords.goods1)
-compressed.extend(CommonRecords.goods2)
+vertex_interpreter = CountingInterpreter(CommonRecords.vertex_encodes,
+                                         feature_dimensions=CommonRecords.vertex_features,
+                                         counting_dimensions=CommonRecords.vertex_countings)
+vertex_compressor = CountingCompressor(vertex_interpreter)
 
-qualitySimpleCoder = OneHotEncoder.coder(compressed)
-print("protects=%s" % qualitySimpleCoder.protects)
-print("protect_indexes=%s" % qualitySimpleCoder.protect_indexes)
-print("codes=%s" % qualitySimpleCoder.codes)
-print("code_indexes=%s" % qualitySimpleCoder.code_indexes)
-print("descriptions_data=%s" % qualitySimpleCoder.descriptions.data)
+vertex_encoder = OneHotEncoder(vertex_compressor)
+vertex_encoder.coding(CommonRecords.goods1)
+vertex_encoder.coding(CommonRecords.goods2)
 
-qualityCoded = OneHotEncoder.coding(compressed, qualitySimpleCoder)
-print("coded=%s" % qualityCoded.coded)
-print("coded_indexes=%s" % qualityCoded.coded_indexes)
-print("descriptions_data=%s" % qualityCoded.descriptions.data)
+print("protects=%s" % vertex_encoder.coder.protects)
+print("protect_indexes=%s" % vertex_encoder.coder.protect_indexes)
+print("uniques=%s" % vertex_encoder.coder.uniques)
+print("unique_indexes=%s" % vertex_encoder.coder.unique_indexes)
+print("records=%s" % vertex_encoder.coder.records.tolist())
 
-# qualityInterpreter = RouteInterpreter(vertex_state_code_keys=["quality"], edge_start_key="from", edge_target_key="to")
-# qualityGraphCoder = RouteEncoder.coder(CommonRecords.goods, interpreter=qualityInterpreter)
+vertex_encoder.encoding(CommonRecords.goods2)
+vertex_encoder.encoding(CommonRecords.goods1)
+print("uniques=%s" % vertex_encoder.coded.uniques)
+print("unique_indexes=%s" % vertex_encoder.coded.unique_indexes)
+print("records=%s" % vertex_encoder.coded.records.tolist())
+print("protect_uniques=%s" % vertex_encoder.coded.protect_uniques)
+
+# edge_interpreter = MappingInterpreter(start_dimension=CommonRecords.edge_start,
+#                                       target_dimension=CommonRecords.edge_target,
+#                                       encode_dimensions=CommonRecords.edge_encodes,
+#                                       state_default=CommonRecords.state_default,
+#                                       feature_dimensions=CommonRecords.edge_features,
+#                                       counting_dimensions=CommonRecords.edge_countings)
+# edge_compressor = CountingCompressor(edge_interpreter)
+# edge_encoder = MappingEncoder(edge_compressor)
+# edge_compressed.extend(CommonRecords.jobs1)
+# edge_compressed.extend(CommonRecords.jobs1)
+# print("edge_compressed_data=%s" % edge_compressed.data)
 #
+# edge_coder = MappingEncoder.coder(edge_compressed, interpreter=edge_interpreter)
+
 # print("vertices=%s" % qualityGraphCoder.vertices)
 # print("vertex_descriptions=%s" % qualityGraphCoder.vertex_descriptions)
 # print("vertex_indexes=%s" % qualityGraphCoder.vertex_indexes)

@@ -1,4 +1,4 @@
-class Combiner:
+class ICombiner:
     @staticmethod
     def combine(keys: list, sp="_") -> str:
         pass
