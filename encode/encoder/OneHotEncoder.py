@@ -4,7 +4,6 @@ from encode.coded.OneHotCoded import OneHotCoded
 from encode.coder.OneHotCoder import OneHotCoder
 from encode.compressor.CountingCompressor import CountingCompressor
 from encode.encoder.IEncoder import IEncoder
-from encode.list.CountingList import CountingList
 from encode.projector.DimensionProjector import DimensionProjector
 
 
@@ -45,14 +44,16 @@ class OneHotEncoder(IEncoder):
         uniques = coder.uniques
         # 新旧编码长度不等则新增编码/维度码,对增量(所处的新数据)进行编码
         if len(uniques) != len(compressed.uniques):
+            # 新数据进行编码
+            increments = compressor.compress(records).tolist()
             # 获取多维投影仪
             projector = coder.projector  # type:DimensionProjector
             # 获取编码维度
             encode_dimensions = coder.compressor.interpreter.encode_dimensions  # type:list
             # 获取原多维映射码
-            protects = coder.protects  # type:list
+            protects = coder.protects  # type:dict
             # 对新数据进行多维编码 & 更新
-            projector.mapping(records, encode_dimensions, protects)
+            projector.project(increments, encode_dimensions, protects)
             # 重置多维反射索引
             coder.protect_indexes = dict(zip(protects, range(len(protects))))
 
@@ -92,7 +93,7 @@ class OneHotEncoder(IEncoder):
             # 获取编码维度
             encode_dimensions = coder.compressor.interpreter.encode_dimensions  # type:list
             # 获取多维编码
-            protect_indexes = coder.protect_indexes  # type:dict
+            protects = coder.protects  # type:dict
             # 获取已进行编码的数据
             protect_coded = coded.protect_uniques.tolist()  # type:list
 
@@ -102,7 +103,7 @@ class OneHotEncoder(IEncoder):
                 # 若该数据不在已投影数据中
                 if interpreter.onehot(record) not in coded.uniques:
                     # 对该新数据进行多维编码
-                    projector.match([record], encode_dimensions, protect_indexes, protect_coded)
+                    projector.projecting([record], encode_dimensions, protects, protect_coded)
 
             # 存储编码结果
             coded.protect_uniques = array(protect_coded, dtype=int)

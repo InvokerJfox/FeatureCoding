@@ -1,20 +1,21 @@
 from numpy import zeros
 
 from encode.combiner.DefaultCombiner import DefaultCombiner
+from encode.projector.IProjector import IProjector
 
 
-class DimensionProjector:
+class DimensionProjector(IProjector):
     """
     数据按值进行多维投影
     """
 
     @staticmethod
-    def mapping(records: list, dimensions: list, older: list, combiner=DefaultCombiner):
+    def project(records: list, dimensions: list, projects: dict, combiner=DefaultCombiner):
         """
-        访问每个记录(records),以维度+值(record[dimension])的方式将编码添加至原编码结果(older)中
+        访问每个记录(records),以维度+值(record[dimension])的方式将编码添加至原编码结果(projects)中
         :param records:
         :param dimensions:
-        :param older:
+        :param projects:
         :param combiner:
         :return:
         """
@@ -24,32 +25,32 @@ class DimensionProjector:
                 # 投影码
                 project = combiner.combine([dimension, str(record[dimension])])
                 # 判断是否存在
-                if project not in older:
-                    older.extend([project])
+                if project not in projects:
+                    projects[project] = len(projects)
 
     @staticmethod
-    def match(records: list, dimensions: list, benchmark: dict, older: list, combiner=DefaultCombiner):
+    def projecting(records: list, dimensions: list, projects: dict, projected: list, combiner=DefaultCombiner):
         """
-        将数据的维度信息(records+dimensions)基于benchmark进行映射,将结果存储在older中
+        将数据的维度信息(records+dimensions)基于projects进行映射,将结果存储在projects中
         并该次数据的编码结果返回
         :param records:
         :param dimensions:
-        :param benchmark:
-        :param older:二维数组
+        :param projects:
+        :param projected:二维数组
         :param combiner:
         :return:
         """
         # 依次对比编码对象,匹配成功则匹配下一个
         for record in records:
             # 编码结果
-            record_coded = zeros((len(benchmark)))
+            record_coded = zeros((len(projects)))
             # 所有维度
             for dimension in dimensions:
                 # 维度映射码
                 project = combiner.combine([dimension, str(record[dimension])])
-                project_index = benchmark[project]
+                project_index = projects[project]
                 # 将该标识码置1
                 record_coded[project_index] = 1
 
             # 新增该记录
-            older.extend([record_coded])
+            projected.extend([record_coded])

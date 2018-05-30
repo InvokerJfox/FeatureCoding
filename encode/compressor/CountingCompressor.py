@@ -1,17 +1,16 @@
-from encode.combiner.DefaultCombiner import DefaultCombiner
-from encode.compressor.Compressor import Compressor
+from encode.code.DimensionCode import DimensionCode
+from encode.compressor.ICompressor import ICompressor
 from encode.interpreter.CountingInterpreter import CountingInterpreter
 from encode.list.CountingList import CountingList
-from encode.code.DimensionCode import DimensionCode
 
 
-class CountingCompressor(Compressor):
-    def __init__(self, interpreter: CountingInterpreter, combiner=DefaultCombiner):
+class CountingCompressor(ICompressor):
+    def __init__(self, interpreter: CountingInterpreter):
         """
         :param interpreter:解释器
-        :param combiner: 组合器
         """
-        super().__init__(interpreter, combiner)
+        super().__init__()
+        self.interpreter = interpreter
 
     def compress(self, records: list) -> CountingList:
         """
@@ -22,13 +21,15 @@ class CountingCompressor(Compressor):
 
         # 计数列表
         cl = CountingList()
+        recs = []
 
         # 解释器
         interpreter = self.interpreter  # type :CountingInterpreter
 
-        # 取encode_dimensions及其值生成唯一码(dict),将相同值进行映射同时统计维度
-        uniques = {}
+        # 记录第一次唯一码出现的list索引
+        uniques = dict()
         # 遍历所有数据
+        record_index = 0
         for record in records:  # type:dict
             # 取维度值
             encodes = interpreter.encodes(record)  # type:dict
@@ -49,11 +50,12 @@ class CountingCompressor(Compressor):
                 value.update(features)
                 value.update(counting)
 
-                # 添加至结果
-                uniques[onehot] = value
+                # 添加至结果 & 记录索引
+                recs.extend([value])
+                uniques[onehot] = record_index
             else:
                 # 存在则验合特征值并累加统计值
-                value = uniques[onehot]
+                value = recs[uniques[onehot]]
                 # 验证特征值
                 feature_dimensions = interpreter.feature_dimensions
                 for feature in feature_dimensions:
@@ -67,8 +69,13 @@ class CountingCompressor(Compressor):
                 for counting in counting_dimensions:
                     value[counting] += record[counting]
 
-        # 唯一码字典
-        cl.data = list(uniques.values())
-        cl.uniques = set(uniques.keys())
+                # 索引自增
+                record_index += 1
+
+        # 存储数据
+        cl.records = recs
+        # 将数据提取出唯一码,并生成对应数据的索引
+        uni = list(map(lambda rec: interpreter.onehot(rec), recs))
+        cl.uniques = dict(zip(uni, range(len(uni))))
 
         return cl

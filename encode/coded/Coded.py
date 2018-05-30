@@ -13,7 +13,5 @@ class Coded:
         self.coder = coder
         # 编码原数据:{编码后数据的索引:原始数据}
         self.records = CountingList()
-        # 数据的唯一编码
-        self.uniques = []
-        # 数据唯一编码的反向索引
-        self.unique_indexes = {}
+        # 数据的唯一编码,及其对应的数据索引
+        self.uniques = {}

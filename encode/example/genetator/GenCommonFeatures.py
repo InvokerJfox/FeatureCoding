@@ -15,17 +15,14 @@ vertex_encoder = OneHotEncoder(vertex_compressor)
 vertex_encoder.coding(CommonRecords.goods1)
 vertex_encoder.coding(CommonRecords.goods2)
 
-print("protects=%s" % vertex_encoder.coder.protects)
-print("protect_indexes=%s" % vertex_encoder.coder.protect_indexes)
-print("uniques=%s" % vertex_encoder.coder.uniques)
-print("unique_indexes=%s" % vertex_encoder.coder.unique_indexes)
 print("records=%s" % vertex_encoder.coder.records.tolist())
+print("uniques=%s" % vertex_encoder.coder.uniques)
+print("protects=%s" % vertex_encoder.coder.protects)
 
 vertex_encoder.encoding(CommonRecords.goods2)
 vertex_encoder.encoding(CommonRecords.goods1)
-print("uniques=%s" % vertex_encoder.coded.uniques)
-print("unique_indexes=%s" % vertex_encoder.coded.unique_indexes)
 print("records=%s" % vertex_encoder.coded.records.tolist())
+print("uniques=%s" % vertex_encoder.coded.uniques)
 print("protect_uniques=%s" % vertex_encoder.coded.protect_uniques)
 
 # edge_interpreter = MappingInterpreter(start_dimension=CommonRecords.edge_start,
