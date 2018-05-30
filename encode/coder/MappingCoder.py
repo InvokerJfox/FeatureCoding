@@ -19,7 +19,5 @@ class MappingCoder(Coder):
         super().__init__(compressor)
         # 用于解释基础状态的带点信息
         self.vertices = vertices
-        # 点(状态)的唯一编码
-        self.vertex_uniques = []
-        # 点(状态)码反向索引,表示其所在的索引
-        self.vertex_unique_indexes = {}
+        # 点(状态)的唯一编码,及其对应的数据索引
+        self.vertex_uniques = {}
