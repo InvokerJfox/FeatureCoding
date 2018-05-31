@@ -44,6 +44,7 @@ class OneHotEncoder(IEncoder):
         uniques = coder.uniques
         # 新旧编码长度不等则新增编码/维度码,对增量(所处的新数据)进行编码
         if len(uniques) != len(compressed.uniques):
+            # TODO 增量最好在压缩过程中生成(新增非必要增量参数),但当前投影有包含去重处理
             # 新数据进行编码
             increments = compressor.compress(records).tolist()
             # 获取多维投影仪

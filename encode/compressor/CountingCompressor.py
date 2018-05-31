@@ -34,7 +34,7 @@ class CountingCompressor(ICompressor):
             # 取维度值
             encodes = interpreter.encodes(record)  # type:dict
             features = interpreter.features(record)  # type:dict
-            counting = interpreter.countings(record)  # type:dict
+            counting = interpreter.counting(record)  # type:dict
 
             # 取唯一码，不存在时用组合器生成
             onehot = interpreter.onehot(record)
@@ -65,9 +65,8 @@ class CountingCompressor(ICompressor):
                             feature, value[feature], record[feature]))
 
                 # 累加统计值
-                counting_dimensions = interpreter.counting_dimensions
-                for counting in counting_dimensions:
-                    value[counting] += record[counting]
+                counting = interpreter.counting_dimension
+                value[counting] += record[counting]
 
                 # 索引自增
                 record_index += 1
