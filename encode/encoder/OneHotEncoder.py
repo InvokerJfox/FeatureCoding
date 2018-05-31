@@ -34,6 +34,7 @@ class OneHotEncoder(IEncoder):
         compressor = coder.compressor
 
         # 全量压缩
+        # TODO 状态数据除了增量数据，也有状态移除问题需要处理
         older = coder.records.tolist()
         older.extend(records)
         compressed = compressor.compress(older)
