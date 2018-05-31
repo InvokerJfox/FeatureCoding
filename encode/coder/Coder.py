@@ -4,7 +4,7 @@ from encode.list.CountingList import CountingList
 
 class Coder:
     """
-    编码器基础属性
+    编码器的编码表
     """
 
     def __init__(self, compressor: CountingCompressor):
