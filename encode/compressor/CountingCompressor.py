@@ -29,7 +29,7 @@ class CountingCompressor(ICompressor):
         # 记录第一次唯一码出现的list索引
         uniques = dict()
         # 遍历所有数据
-        record_index = 0
+        unique_index = 0
         for record in records:  # type:dict
             # 取维度值
             encodes = interpreter.encodes(record)  # type:dict
@@ -52,7 +52,10 @@ class CountingCompressor(ICompressor):
 
                 # 添加至结果 & 记录索引
                 recs.extend([value])
-                uniques[onehot] = record_index
+                uniques[onehot] = unique_index
+
+                # 索引自增
+                unique_index += 1
             else:
                 # 存在则验合特征值并累加统计值
                 value = recs[uniques[onehot]]
@@ -61,15 +64,12 @@ class CountingCompressor(ICompressor):
                 for feature in feature_dimensions:
                     # 若出现重复特征值则警告
                     if value[feature] != record[feature]:
-                        print("WARMING: compressed coded's %s has different values: old:%s → new:%s" % (
-                            feature, value[feature], record[feature]))
+                        print("WARMING: CountingCompressor compressed dimension:[%s]"
+                              " two different values: old:[%s] → new:[%s]" % (feature, value[feature], record[feature]))
 
                 # 累加统计值
                 counting = interpreter.counting_dimension
                 value[counting] += record[counting]
-
-                # 索引自增
-                record_index += 1
 
         # 存储数据
         cl.records = recs
