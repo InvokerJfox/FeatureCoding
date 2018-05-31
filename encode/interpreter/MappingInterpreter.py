@@ -1,20 +1,18 @@
-from encode.interpreter.CountingInterpreter import CountingInterpreter
+from encode.interpreter.DimensionInterpreter import DimensionInterpreter
 
 
-class MappingInterpreter(CountingInterpreter):
-    def __init__(self, start_dimension: str, target_dimension: str, encode_dimensions: list, feature_dimensions=None,
-                 counting_dimensions=None):
+class MappingInterpreter(DimensionInterpreter):
+    def __init__(self, start_dimension: str, target_dimension: str, encode_dimensions: list, feature_dimensions=None):
         """
         映射型数据识别器
         :param start_dimension: 起始操作维度
         :param target_dimension: 目标操作维度
         :param encode_dimensions: 起始&目标操作维度中编码维度
         :param feature_dimensions: 特征维度:压缩后保留的维度,若压缩后存在多个不同值,则提报警告
-        :param counting_dimensions: 统计维度:压缩后将该维度进行值累计(累加)
         """
         self.start_dimension = start_dimension
         self.target_dimension = target_dimension
-        super().__init__(encode_dimensions, feature_dimensions, counting_dimensions)
+        super().__init__(encode_dimensions, feature_dimensions)
 
     def starts(self, record: dict) -> dict:
         """
