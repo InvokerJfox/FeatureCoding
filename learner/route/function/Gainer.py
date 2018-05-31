@@ -1,4 +1,4 @@
-class Gain:
+class Gainer:
     @staticmethod
     def default():
         pass

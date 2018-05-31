@@ -4,35 +4,37 @@ from encode.encoder.OneHotEncoder import OneHotEncoder
 from encode.example.record import CommonRecords
 from encode.interpreter.CountingInterpreter import CountingInterpreter
 from encode.interpreter.MappingInterpreter import MappingInterpreter
-from encode.list.CountingList import CountingList
 
-vertex_interpreter = CountingInterpreter(CommonRecords.vertex_encodes,
+vertex_interpreter = CountingInterpreter(encode_dimensions=CommonRecords.vertex_encodes,
                                          feature_dimensions=CommonRecords.vertex_features,
-                                         counting_dimensions=CommonRecords.vertex_countings)
+                                         counting_dimension=CommonRecords.vertex_counting)
 vertex_compressor = CountingCompressor(vertex_interpreter)
 
 vertex_encoder = OneHotEncoder(vertex_compressor)
 vertex_encoder.coding(CommonRecords.goods1)
 vertex_encoder.coding(CommonRecords.goods2)
 
-print("records=%s" % vertex_encoder.coder.records.tolist())
-print("uniques=%s" % vertex_encoder.coder.uniques)
-print("protects=%s" % vertex_encoder.coder.protects)
+print("coder_records=%s" % vertex_encoder.coder.records.tolist())
+print("coder_uniques=%s" % vertex_encoder.coder.uniques)
+print("coder_protects=%s" % vertex_encoder.coder.protects)
 
 vertex_encoder.encoding(CommonRecords.goods2)
 vertex_encoder.encoding(CommonRecords.goods1)
-print("records=%s" % vertex_encoder.coded.records.tolist())
-print("uniques=%s" % vertex_encoder.coded.uniques)
-print("protect_uniques=%s" % vertex_encoder.coded.protect_uniques)
+print("coded_records=%s" % vertex_encoder.coded.records.tolist())
+print("coded_uniques=%s" % vertex_encoder.coded.uniques)
+print("coded_protect_uniques=%s" % vertex_encoder.coded.protect_uniques)
 
-# edge_interpreter = MappingInterpreter(start_dimension=CommonRecords.edge_start,
-#                                       target_dimension=CommonRecords.edge_target,
-#                                       encode_dimensions=CommonRecords.edge_encodes,
-#                                       state_default=CommonRecords.state_default,
-#                                       feature_dimensions=CommonRecords.edge_features,
-#                                       counting_dimensions=CommonRecords.edge_countings)
+edge_interpreter = MappingInterpreter(start_dimension=CommonRecords.edge_start,
+                                      target_dimension=CommonRecords.edge_target,
+                                      encode_dimensions=CommonRecords.edge_encodes,
+                                      feature_dimensions=CommonRecords.edge_features)
 # edge_compressor = CountingCompressor(edge_interpreter)
 # edge_encoder = MappingEncoder(edge_compressor)
+#
+# print("records=%s" % vertex_encoder.coder.records.tolist())
+# print("uniques=%s" % vertex_encoder.coder.uniques)
+# print("protects=%s" % vertex_encoder.coder.protects)
+
 # edge_compressed.extend(CommonRecords.jobs1)
 # edge_compressed.extend(CommonRecords.jobs1)
 # print("edge_compressed_data=%s" % edge_compressed.data)

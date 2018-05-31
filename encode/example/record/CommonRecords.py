@@ -2,9 +2,9 @@
 # 状态编码维度
 vertex_encodes = ["quality"]
 # 状态特征维度
-vertex_features = []
+vertex_features = ["quality"]
 # 状态统计维度
-vertex_countings = ["qty"]
+vertex_counting = "qty"
 # 映射连接起始维度
 edge_start = "from"
 # 映射连接目标维度
@@ -16,7 +16,7 @@ state_default = {"quality": -9999}
 # 映射特征维度
 edge_features = []
 # 映射统计维度
-edge_countings = []
+edge_counting = []
 
 # 消费物数据(作为状态/点):编码前(预处理/压缩)必须确定状态唯一性
 goods1 = [{"id": 20000000000000001, "quality": "未知品质", "qty": 10},
@@ -30,8 +30,7 @@ goods2 = [{"id": 20000000000000007, "quality": "未知品质", "qty": 10},
           {"id": 20000000000000008, "quality": "合格品", "qty": 300},
           {"id": 20000000000000009, "quality": "次品", "qty": 10},
           {"id": 20000000000000010, "quality": "合格品", "qty": 60},
-          {"id": 20000000000000011, "quality": "废品", "qty": 1}
-          ]
+          {"id": 20000000000000011, "quality": "废品", "qty": 1}]
 
 # 作业数据(作为变化/边):一种变化可以存在多种实现方式
 jobs1 = [{"id": 30000000000200001, "from": {"quality": "未知品质"}, "to": {"quality": "合格品"}, "duration": "10",
