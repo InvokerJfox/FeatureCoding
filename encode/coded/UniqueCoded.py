@@ -8,8 +8,10 @@ class UniqueCoded:
     """
 
     def __init__(self, interpreter: UniqueInterpreter):
+        """
+        初始化编码原始数据
+        :param interpreter: 维度解释器
+        """
         super().__init__()
-        # 编码原数据:{编码后数据的索引:原始数据}
+        # 编码原数据,具有唯一主键
         self.records = UniqueList(interpreter)
-        # 数据的唯一编码,及其对应的数据索引
-        self.uniques = {}
