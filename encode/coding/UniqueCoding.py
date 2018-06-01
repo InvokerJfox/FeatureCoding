@@ -10,7 +10,7 @@ class UniqueCoding:
     def __init__(self, interpreter: UniqueInterpreter):
         """
         初始化编码原始数据
-        :param interpreter:
+        :param interpreter:数据解释器
         """
         super().__init__()
         # 原始数据,具有唯一主键

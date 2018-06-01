@@ -1,7 +1,7 @@
 import numpy as np
+from encode.coding.RouteCoder import RouteCoder
 from numpy import array
 
-from encode.coder.RouteCoder import RouteCoder
 from encode.encoder.RouteEncoder import RouteEncoder
 
 

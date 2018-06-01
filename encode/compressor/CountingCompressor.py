@@ -1,18 +1,14 @@
 from encode.code.DimensionCode import DimensionCode
 from encode.compressor.ICompressor import ICompressor
-from encode.interpreter.CountingInterpreter import CountingInterpreter
 from encode.list.CountingList import CountingList
 
 
 class CountingCompressor(ICompressor):
-    def __init__(self, interpreter: CountingInterpreter):
-        """
-        :param interpreter:解释器
-        """
-        super().__init__()
-        self.interpreter = interpreter
-
-    def compress(self, records: list) -> CountingList:
+    """
+    用
+    """
+    @staticmethod
+    def compress(records: list) -> CountingList:
         """
         将原数据(records)按指定维度(encode_dimensions)进行相同值合并,合并时仅保留统计维度(counting_dimensions),并舍弃其他维度
         :param records: list[dict]
