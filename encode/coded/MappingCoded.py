@@ -1,10 +1,10 @@
 from numpy import array
 
-from encode.coded.Coded import Coded
+from encode.coded.OneHotCoded import OneHotCoded
 from encode.coder.MappingCoder import MappingCoder
 
 
-class MappingCoded(Coded):
+class MappingCoded(OneHotCoded):
     """
     存储映射型独热编码的结果
     注:1.输入值不允许重复(不可重定义)
