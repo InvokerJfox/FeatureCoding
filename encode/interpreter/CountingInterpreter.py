@@ -1,7 +1,7 @@
-from encode.interpreter.DimensionInterpreter import DimensionInterpreter
+from encode.interpreter.UniqueInterpreter import UniqueInterpreter
 
 
-class CountingInterpreter(DimensionInterpreter):
+class CountingInterpreter(UniqueInterpreter):
     def __init__(self, encode_dimensions: list, feature_dimensions=None, counting_dimension=None):
         """
         数据识别

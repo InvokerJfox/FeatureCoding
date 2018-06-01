@@ -1,26 +1,13 @@
-from encode.interpreter.IOneHotInterpreter import IOneHotInterpreter
-
-
-class DimensionInterpreter(IOneHotInterpreter):
+class EncodeInterpreter:
     """
-    解释数据维度的识别信息
+    编码数据的一般解释器
     """
-
     def __init__(self, encode_dimensions: list, feature_dimensions=None):
         super().__init__()
-        self.onehot_dimension = "onehotid"  # 用于存储编码唯一码的字段
         self.encode_dimensions = encode_dimensions
         if feature_dimensions is None:
-                feature_dimensions = []
+            feature_dimensions = []
         self.feature_dimensions = feature_dimensions
-
-    def onehot(self, record: dict) -> str:
-        """
-        返回onehot值
-        :param record:
-        :return:
-        """
-        return record.get(self.onehot_dimension)
 
     def encodes(self, record: dict) -> dict:
         """

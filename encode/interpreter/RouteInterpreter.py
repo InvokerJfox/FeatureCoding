@@ -1,7 +1,7 @@
-from encode.interpreter.DimensionInterpreter import DimensionInterpreter
+from encode.interpreter.UniqueInterpreter import UniqueInterpreter
 
 
-class MappingInterpreter(DimensionInterpreter):
+class MappingInterpreter(UniqueInterpreter):
     def __init__(self, start_dimension: str, target_dimension: str, encode_dimensions: list, feature_dimensions=None):
         """
         映射型数据识别器
