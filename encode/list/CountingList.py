@@ -1,6 +1,7 @@
+from encode.interpreter.CountingInterpreter import CountingInterpreter
 from encode.list.UniqueList import UniqueList
 
 
-class UniqueList(UniqueList):
-    def __init__(self, interpreter=DimensionInterpreter):
+class CountingList(UniqueList):
+    def __init__(self, interpreter: CountingInterpreter):
         super().__init__(interpreter)
