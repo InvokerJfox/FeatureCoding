@@ -3,7 +3,7 @@ from numpy import array
 from encode.coded.UniqueCoded import UniqueCoded
 
 
-class LinkCoded(UniqueCoded):
+class RouteCoded(UniqueCoded):
     """
     存储关联关系结果
     """
@@ -14,4 +14,4 @@ class LinkCoded(UniqueCoded):
         """
         super().__init__()
         # 存储基于状态结果(UniqueCoding.uniques)的映射关系(映射结果为列表),格式:[[list,list][list,list]]
-        self.links = array(())
+        self.routes = array(())
