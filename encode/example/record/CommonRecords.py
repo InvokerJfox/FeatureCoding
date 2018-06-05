@@ -5,6 +5,8 @@ vertex_encodes = ["quality"]
 vertex_features = ["quality"]
 # 状态统计维度
 vertex_counting = "qty"
+# 投影维度
+vertex_projects = ["quality"]
 # 映射连接起始维度
 edge_start = "from"
 # 映射连接目标维度

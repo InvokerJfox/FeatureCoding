@@ -1,11 +1,10 @@
-from encode.encoding.IEncoding import IEncoding
+from encode.decoding.RouteCoding import MappingCoder
+from encode.list.CountingCompressor import CountingCompressor
 from numpy import array
 
-from encode.code.DimensionCode import DimensionCode
-from encode.coded.ProjectCoded import OneHotCoded
-from encode.coded.RouteCoded import MappingCoded
-from encode.coding.RouteCoding import MappingCoder
-from encode.compressor.CountingCompressor import CountingCompressor
+from encode.encoded.ProjectEncoded import OneHotCoded
+from encode.encoded.RouteEncoded import MappingCoded
+from encode.encoder.DimensionEncoder import DimensionCode
 from encode.interpreter.CountingInterpreter import CountingInterpreter
 
 

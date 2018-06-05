@@ -1,7 +1,7 @@
 from numpy import array
 
 from encode.encoder.CountingEncoder import OneHotEncoder
-from encode.projector.DimensionProjector import DimensionProjector
+from encode.mapper.projector import DimensionProjector
 
 
 class ProjectEncoder(OneHotEncoder):

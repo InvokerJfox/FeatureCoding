@@ -1,7 +1,11 @@
-class IDecoding:
+class ILearner:
     """
     译码表
     """
+
+    def __init__(self):
+        super().__init__()
+        self.records = []
 
     def feed(self, records: list):
         """

@@ -1,25 +1,37 @@
-from encode.coded.UniqueCoded import UniqueCoded
-from encode.coding.UniqueCoding import UniqueCoding
-from encode.list.UniqueList import UniqueList
+from encode.combiner.ICombiner import ICombiner
 
 
 class IEncoder:
     """
-    增量式编码器接口
+    编码器接口
     """
 
     @staticmethod
-    def learn(coding: UniqueCoding, records: UniqueList):
+    def encode(record: dict, combiner: ICombiner) -> str:
+        """
+        编码
+        :param record:
+        :param combiner:
+        :return:
+        """
         pass
 
     @staticmethod
-    def forget(coding: UniqueCoding, indexes: list):
+    def decode(code: str, combiner: ICombiner) -> dict:
+        """
+        解码
+        :param code:
+        :param combiner:
+        :return:
+        """
         pass
 
     @staticmethod
-    def encode(coded: UniqueCoded, coding: UniqueCoding, records: UniqueList):
-        pass
-
-    @staticmethod
-    def decode(coded: UniqueCoded, indexes: list):
+    def hash(record: dict, combiner: ICombiner) -> str:
+        """
+        哈希编码
+        :param record:
+        :param combiner:
+        :return:
+        """
         pass

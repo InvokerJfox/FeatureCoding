@@ -1,23 +1,24 @@
-from encode.coded.UniqueCoded import OneHotCoded
-from encode.coding.UniqueCoding import OneHotCoding
+from encode.encoded.UniqueCoded import UniqueCoded
+from encode.decoding.UniqueCoding import UniqueCoding
 from encode.encoder.IEncoder import IEncoder
-from encode.list.UniqueList import OneHotList
+from encode.list.UniqueList import UniqueList
 
 
 class CountingEncoder(IEncoder):
     """
     计数编码器
     """
+
     @staticmethod
-    def learn(coding: OneHotCoding, records: OneHotList):
+    def learn(coding: UniqueCoding, records: UniqueList):
         pass
 
     @staticmethod
-    def forget(coding: OneHotCoding, indexes: list):
+    def forget(coding: UniqueCoding, indexes: list):
         pass
 
     @staticmethod
-    def encode(coded: OneHotCoded, coding: OneHotCoding, records: OneHotList):
+    def encode(coded: UniqueCoded, coding: UniqueCoding, records: UniqueList):
         """
         数据增量生成独热编码、投影码;并保存在Coded对象中
         :param coded: 编码结果
@@ -69,5 +70,5 @@ class CountingEncoder(IEncoder):
             self.coded = coded
 
     @staticmethod
-    def remove(coded: OneHotCoded, indexes: list):
+    def decode(coded: UniqueCoded, indexes: list):
         pass

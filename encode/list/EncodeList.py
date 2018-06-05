@@ -1,7 +1,8 @@
 from encode.interpreter.EncodeInterpreter import EncodeInterpreter
+from encode.list.List import List
 
 
-class EncodeList:
+class EncodeList(List):
     """
         具有OneHot唯一编码的列表
     """

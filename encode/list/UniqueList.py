@@ -1,4 +1,4 @@
-from encode.code.DimensionCode import DimensionCode
+from encode.encoder.DimensionEncoder import DimensionEncoder
 from encode.interpreter.UniqueInterpreter import UniqueInterpreter
 from encode.list.EncodeList import EncodeList
 
@@ -33,7 +33,7 @@ class UniqueList(EncodeList):
             # 取唯一码，不存在时用组合器生成
             unique = interpreter.unique(record)
             if unique is None:
-                unique = DimensionCode.code(encodes)
+                unique = DimensionEncoder.code(encodes)
 
             # 若不存在该记录则更新
             if unique not in uniques:

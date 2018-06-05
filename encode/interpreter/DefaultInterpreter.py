@@ -1,4 +1,7 @@
-class DefaultInterpreter:
+from encode.interpreter.Interpreter import Interpreter
+
+
+class DefaultInterpreter(Interpreter):
     def __init__(self, dimensions: list):
         """
 

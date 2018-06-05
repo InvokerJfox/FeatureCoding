@@ -1,10 +1,10 @@
 from numpy import array
 
-from encode.coded.UniqueCoded import UniqueCoded
+from encode.encoded.Encoded import Encoded
 from encode.interpreter import RouteInterpreter
 
 
-class RouteCoded(UniqueCoded):
+class RouteEncoded(Encoded):
     """
     路由器编码结果
     """

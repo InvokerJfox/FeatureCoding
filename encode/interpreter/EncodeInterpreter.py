@@ -1,4 +1,7 @@
-class EncodeInterpreter:
+from encode.interpreter.Interpreter import Interpreter
+
+
+class EncodeInterpreter(Interpreter):
     """
     编码数据的一般解释器
     """

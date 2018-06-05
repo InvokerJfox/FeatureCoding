@@ -1,8 +1,8 @@
-from encode.code.ICode import ICode
+from encode.encoder.IEncoder import IEncoder
 from encode.combiner.DefaultCombiner import DefaultCombiner
 
 
-class DimensionCode(ICode):
+class DimensionEncoder(IEncoder):
     """
     一种以维度+值生成唯一码的方法
     """
@@ -27,4 +27,4 @@ class DimensionCode(ICode):
         :param combiner:
         :return:
         """
-        return hash(DimensionCode.code(record, combiner))
+        return hash(DimensionEncoder.code(record, combiner))
