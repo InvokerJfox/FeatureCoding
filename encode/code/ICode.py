@@ -6,5 +6,6 @@ class ICode:
     def code(record: dict, combiner: ICombiner) -> str:
         pass
 
-    def hash(self):
+    @staticmethod
+    def hash(record: dict, combiner: ICombiner) -> str:
         pass
