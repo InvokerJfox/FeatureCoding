@@ -2,7 +2,13 @@ class EncodeInterpreter:
     """
     编码数据的一般解释器
     """
+
     def __init__(self, encode_dimensions: list, feature_dimensions=None):
+        """
+
+        :param encode_dimensions: 编码维度
+        :param feature_dimensions: 保留维度
+        """
         super().__init__()
         self.encode_dimensions = encode_dimensions
         if feature_dimensions is None:
