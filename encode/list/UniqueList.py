@@ -6,42 +6,49 @@ from encode.list.EncodeList import EncodeList
 class UniqueList(EncodeList):
     def __init__(self, interpreter: UniqueInterpreter):
         super().__init__(interpreter)
-        #  已存在数据字典表,及其对应的数据索引
+        #  数据字典表,及其对应的数据索引
         self.uniques = {}
 
+    def extend(self, records: list):
+        """
+        新增数据,按指定维度(encode_dimensions)生成唯一码并进行相同值合并
+        :param records:
+        :return:
+        """
 
-def encode_to_unique(el: EncodeList) -> UniqueList:
-    """
-    将输入的EncodeList 添加唯一码成为 UniqueList
-    :param el:
-    :return:
-    """
-    # 提取解释器 & 数据
-    interpreter = UniqueInterpreter(el.interpreter.encode_dimensions,
-                                    el.interpreter.feature_dimensions)
-    records = el.records
-    # 结果
-    l = []
-    uniques = {}
+        # 读取数据和解释器
+        interpreter = self.interpreter
+        older = self.records
 
-    for record in records:  # type:dict
-        # 取唯一码，不存在时用组合器生成
-        unique = interpreter.unique(record)
-        if unique is None:
-            # 提取编码并生成唯一码存储
-            encodes = interpreter.encodes(record)
-            unique = DimensionCode.code(encodes)
-            record[interpreter.unique_dimension] = unique
+        # 读取唯一码出现的list索引,记录新数据反射记录索引
+        uniques = self.uniques
+        unique_index = len(uniques)
 
-        # 判断唯一码是否冲突,冲突时提示
-        if unique in uniques:
-            print("WARMING: UniqueEncoder got duplicate unique value:[%s]" % unique)
-        else:
-            uniques[unique] = len(l)
-            l.extend([record])
+        # 遍历所有数据
+        for record in records:  # type:dict
+            # 取维度值
+            encodes = interpreter.encodes(record)  # type:dict
+            features = interpreter.features(record)  # type:dict
 
-    ul = UniqueList(interpreter)
-    ul.records = l
-    ul.uniques = uniques
+            # 取唯一码，不存在时用组合器生成
+            unique = interpreter.unique(record)
+            if unique is None:
+                unique = DimensionCode.code(encodes)
 
-    return ul
+            # 若不存在该记录则更新
+            if unique not in uniques:
+                # 新建该记录
+                value = {interpreter.unique_dimension: unique}
+                # 取编码值 & 特征值 & 统计维度值
+                value.update(encodes)
+                value.update(features)
+
+                # 添加至结果 & 记录索引
+                older.extend([value])
+                uniques[unique] = unique_index
+
+                # 索引自增
+                unique_index += 1
+            else:
+                # 出现重复唯一码,提示
+                print("WARMING: UniqueList got duplicate unique id[%s]" % unique)
