@@ -7,30 +7,30 @@ class IEncoder:
     """
 
     @staticmethod
-    def encode(record: dict, combiner: ICombiner) -> str:
+    def encode(records: list, combiner: ICombiner) -> list:
         """
         编码
-        :param record:
+        :param records:
         :param combiner:
         :return:
         """
         pass
 
     @staticmethod
-    def decode(code: str, combiner: ICombiner) -> dict:
+    def decode(codes: list, combiner: ICombiner) -> list:
         """
         解码
-        :param code:
+        :param codes:
         :param combiner:
         :return:
         """
         pass
 
     @staticmethod
-    def hash(record: dict, combiner: ICombiner) -> str:
+    def hash(records: list, combiner: ICombiner) -> list:
         """
         哈希编码
-        :param record:
+        :param records:
         :param combiner:
         :return:
         """
