@@ -1,13 +1,11 @@
-from encode.list.UniqueList import UniqueList
-
-
 class Encoded:
-    def __init__(self, records: UniqueList):
+    def __init__(self):
         super().__init__()
-        self.records = records
+        self.records = None
+        self.encoder = None
 
-    def encode(self, decoding: list, records: list) -> list:
+    def extend(self, records: list):
         pass
 
-    def decode(self, coded: list, indexes: list):
+    def remove(self, indexes: list):
         pass
