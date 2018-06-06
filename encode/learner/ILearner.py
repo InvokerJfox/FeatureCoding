@@ -15,7 +15,7 @@ class ILearner:
         """
         pass
 
-    def poison(self, indexes: list):
+    def leak(self, indexes: list):
         """
         输入遗忘数据
         :param indexes:
