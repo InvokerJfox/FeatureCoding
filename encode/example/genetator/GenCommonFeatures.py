@@ -1,40 +1,29 @@
-import numpy as np
-
 from encode.example.record import CommonRecords
 from encode.interpreter.CountingInterpreter import CountingInterpreter
-from encode.interpreter.DefaultInterpreter import DefaultInterpreter
 from encode.list.CountingList import CountingList
-from encode.mapper.projector.OneHotProjector import OneHotProjector
+from encode.list.ProjectedList import ProjectedList
+from encode.projector.OneHotProjector import OneHotProjector
 
-good_interpreter = CountingInterpreter(encode_dimensions=CommonRecords.vertex_encodes,
+good_interpreter = CountingInterpreter(dimensions=CommonRecords.vertex_projects,
+                                       encode_dimensions=CommonRecords.vertex_encodes,
                                        feature_dimensions=CommonRecords.vertex_features,
                                        counting_dimension=CommonRecords.vertex_counting)
+
 goods = CountingList(good_interpreter)
 goods.extend(CommonRecords.goods1)
 goods.extend(CommonRecords.goods2)
+good_projector = OneHotProjector(good_interpreter)
+good_projector.feed(CommonRecords.goods1)
+good_projector.feed(CommonRecords.goods2)
+print("good_projector_records=%s" % good_projector.records)
+print("good_projector_projects=%s" % good_projector.projects)
+print("good_projector_project_indexes=%s" % good_projector.project_indexes)
+good_projected = ProjectedList(good_projector)
+good_projected.extend(CommonRecords.goods2)
+good_projected.extend(CommonRecords.goods1)
+print("good_projector_records=%s" % good_projected.records)
+print("good_projector_protected=%s" % good_projected.protected)
 
-print("goods_records=%s" % goods.records)
-
-project_interpreter = DefaultInterpreter(dimensions=CommonRecords.vertex_projects)
-good_projector = OneHotProjector(project_interpreter)
-good_projector.feed(goods.records)
-good_projected = good_projector.project(CommonRecords.goods1)
-good_projected.extend(good_projector.project(CommonRecords.goods2))
-print("good_projector=%s" % good_projector.projects)
-print("good_projected=%s" % good_projected)
-print(np.array(good_projected))
-
-
-# vertex_encoder.coding(CommonRecords.goods1)
-# vertex_encoder.coding(CommonRecords.goods2)
-
-
-# vertex_encoder.encoding(CommonRecords.goods2)
-# vertex_encoder.encoding(CommonRecords.goods1)
-# print("coded_records=%s" % vertex_encoder.encoded.records.tolist())
-# print("coded_uniques=%s" % vertex_encoder.encoded.uniques)
-# print("coded_protect_uniques=%s" % vertex_encoder.encoded.protect_uniques)
-#
 # edge_interpreter = MappingInterpreter(start_dimension=CommonRecords.edge_start,
 #                                       target_dimension=CommonRecords.edge_target,
 #                                       encode_dimensions=CommonRecords.edge_encodes,

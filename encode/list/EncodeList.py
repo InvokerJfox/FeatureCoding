@@ -7,24 +7,18 @@ class EncodeList(List):
         具有OneHot唯一编码的列表
     """
 
-    def __init__(self, interpreter: EncodeInterpreter, records=None):
+    def __init__(self, interpreter: EncodeInterpreter):
         """
         初始化
         :param interpreter:
-        :param records:
         """
-        if records is None:
-            records = []
 
-        super().__init__()
-        # 数据
-        self.records = records
-        self.interpreter = interpreter
+        super().__init__(interpreter)
 
     def extend(self, records: list):
         """
         新增数据
         :param records:
-        :return:
+        :return:返回更新索引
         """
-        self.records.extend(records)
+        super().extend(records)

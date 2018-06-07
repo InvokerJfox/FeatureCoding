@@ -8,7 +8,7 @@ class DimensionEncoder(IEncoder):
     """
 
     @staticmethod
-    def code(record: dict, combiner=DefaultCombiner) -> str:
+    def encode(record: dict, combiner=DefaultCombiner) -> str:
         """
         生成维度组合码
         :param record:
@@ -27,4 +27,4 @@ class DimensionEncoder(IEncoder):
         :param combiner:
         :return:
         """
-        return hash(DimensionEncoder.code(record, combiner))
+        return hash(DimensionEncoder.encode(record, combiner))

@@ -1,7 +1,7 @@
 from numpy import zeros
 
 from encode.encoder.DimensionEncoder import DimensionEncoder
-from encode.interpreter.DefaultInterpreter import DefaultInterpreter
+from encode.interpreter.Interpreter import Interpreter
 from encode.learner.ILearner import ILearner
 
 
@@ -10,7 +10,7 @@ class OneHotProjector(ILearner):
     数据按 维度+值 进行多维投影
     """
 
-    def __init__(self, interpreter: DefaultInterpreter):
+    def __init__(self, interpreter: Interpreter):
         super().__init__()
         self.interpreter = interpreter
         # 投影结果及投影对应的投影索引
@@ -29,6 +29,7 @@ class OneHotProjector(ILearner):
         # 投影值
         projects = self.projects
         # 全量数据索引
+        project_indexes = self.project_indexes
         project_index = len(self.records)
         # 添加历史记录
         self.records.extend(records)
@@ -37,12 +38,13 @@ class OneHotProjector(ILearner):
             # 所有维度
             for dimension in dimensions:  # type:str
                 # 投影码
-                project = DimensionEncoder.code({dimension: str(record[dimension])})
+                project = DimensionEncoder.encode({dimension: str(record[dimension])})
                 # 若投影不存在则添加
                 if project not in projects:
                     projects[project] = len(projects)
                 # 记录投影对应的数据id
-                projects[project] = project_index
+                project_indexes.setdefault(project, [])
+                project_indexes[project].extend([project_index])
                 project_index += 1
 
     def leak(self, indexes: list):
@@ -68,7 +70,7 @@ class OneHotProjector(ILearner):
             # 所有维度
             for dimension in dimensions:
                 # 维度映射码
-                project = DimensionEncoder.code({dimension: str(record[dimension])})
+                project = DimensionEncoder.encode({dimension: str(record[dimension])})
                 project_index = projects[project]
                 # 将该标识码置1
                 record_coded[project_index] = 1
