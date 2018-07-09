@@ -1,12 +1,12 @@
 # 路由求解测试数据
 # 状态编码维度
-vertex_encodes = ["quality"]
+vertex_encodes = ["quality","id"]
 # 状态特征维度
-vertex_features = ["quality"]
+vertex_features = ["quality","id"]
 # 状态统计维度
 vertex_counting = "qty"
 # 投影维度
-vertex_projects = ["quality"]
+vertex_projects = ["quality","id"]
 # 映射连接起始维度
 edge_start = "from"
 # 映射连接目标维度

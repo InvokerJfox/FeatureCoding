@@ -3,9 +3,10 @@ from numpy import zeros
 from encode.encoder.DimensionEncoder import DimensionEncoder
 from encode.interpreter.Interpreter import Interpreter
 from encode.learner.ILearner import ILearner
+from encode.projector.IProjector import IProjector
 
 
-class OneHotProjector(ILearner):
+class OneHotProjector(ILearner, IProjector):
     """
     数据按 维度+值 进行多维投影
     """

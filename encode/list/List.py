@@ -32,4 +32,5 @@ class List:
         :param indexes:
         :return:
         """
-        pass
+        for index in indexes:
+            self.records.remove(index)
