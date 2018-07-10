@@ -1,4 +1,4 @@
-from encode.iscs.entry.displacement.entry import PathNode
+from encode.example.entity.displacement.entry.PathNode import PathNode
 
 
 class LinkToPathNode:

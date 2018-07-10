@@ -1,4 +1,4 @@
-from encode.example.record import CommonRecords
+from encode.example.data import CommonRecords
 from encode.interpreter.CountingInterpreter import CountingInterpreter
 from encode.list.CountingList import CountingList
 from encode.list.ProjectedList import ProjectedList

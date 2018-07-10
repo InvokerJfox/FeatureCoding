@@ -1,4 +1,5 @@
-from encode.iscs.entry.displacement.entry import Area
+from encode.example.entity.displacement.entry.Area import Area
+from encode.example.entity.displacement.entry.Coordinate import Coordinate
 
 
 class Road:

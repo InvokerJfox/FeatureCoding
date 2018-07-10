@@ -1,4 +1,4 @@
-from encode.feature.displacement import BaseEntry
+from encode.example.entity.displacement.entry.BaseEntry import BaseEntry
 
 
 class PositionVector(BaseEntry):

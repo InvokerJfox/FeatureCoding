@@ -1,8 +1,9 @@
-from encode.displacement.entry.BaseEntry import BaseEntry
+from encode.example.entity.displacement.entry.BaseEntry import BaseEntry
 
 
 class Map(BaseEntry):
-    def __init__(self,map_id:int, map_name: str, map_code=None, boundary_area=None, areas=None, positions=None, path_node=None):
+    def __init__(self, map_id: int, map_name: str, map_code=None, boundary_area=None, areas=None, positions=None,
+                 path_node=None):
         """
         initial a map
         :param map_name: identify name

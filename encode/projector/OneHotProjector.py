@@ -21,7 +21,7 @@ class OneHotProjector(ILearner, IProjector):
 
     def feed(self, records: list):
         """
-        访问每个记录(records),以维度+值(record[dimension])的方式将编码添加至原编码结果(projects)中
+        访问每个记录(records),以维度+值(data[dimension])的方式将编码添加至原编码结果(projects)中
         :param records:
         :return:
         """

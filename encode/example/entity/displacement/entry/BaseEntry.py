@@ -7,12 +7,12 @@ class BaseEntry:
                     print(att, ":", val)
                 elif isinstance(val, (list, tuple, dict)):
                     print(att, ":")
-                    print('↓')
+                    print('[')
                     for item in val:
                         if hasattr(item, 'display'):
                             item.display()
                             print()
-                    print('↑')
+                    print(']')
                 elif hasattr(val, 'display'):
                     val.display()
                     print()

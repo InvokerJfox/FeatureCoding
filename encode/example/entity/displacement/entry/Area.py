@@ -1,6 +1,6 @@
-from encode.feature.displacement import BaseEntry
-from encode.feature.displacement import Coordinate
-from encode.feature.displacement import LinkToPathNode
+from encode.example.entity.displacement.entry.BaseEntry import BaseEntry
+from encode.example.entity.displacement.entry.Coordinate import Coordinate
+from encode.example.entity.displacement.entry.LinkToPathNode import LinkToPathNode
 
 
 class Area(BaseEntry):
