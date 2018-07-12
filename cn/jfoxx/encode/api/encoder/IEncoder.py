@@ -1,4 +1,4 @@
-from encode.utility.string.ICombiner import ICombiner
+from cn.jfoxx.encode.utility import ICombiner
 
 
 class IEncoder:

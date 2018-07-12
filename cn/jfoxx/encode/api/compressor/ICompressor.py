@@ -1,4 +1,4 @@
-from encode.vector.Vector import Vector
+from cn.jfoxx.encode import Vector
 
 
 class ICompressor:
