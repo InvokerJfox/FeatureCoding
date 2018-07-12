@@ -1,5 +1,5 @@
 from encode.encoder.IEncoder import IEncoder
-from encode.combiner.DefaultCombiner import DefaultCombiner
+from encode.utility.string.StringCombiner import StringCombiner
 
 
 class DimensionEncoder(IEncoder):
@@ -8,7 +8,7 @@ class DimensionEncoder(IEncoder):
     """
 
     @staticmethod
-    def encode(record: dict, combiner=DefaultCombiner) -> str:
+    def encode(record: dict, combiner=StringCombiner) -> str:
         """
         生成维度组合码
         :param record:
@@ -20,7 +20,7 @@ class DimensionEncoder(IEncoder):
         return combiner.combine(values)
 
     @staticmethod
-    def hash(record: dict, combiner=DefaultCombiner):
+    def hash(record: dict, combiner=StringCombiner):
         """
         生成hash码,不强制唯一
         :param record:

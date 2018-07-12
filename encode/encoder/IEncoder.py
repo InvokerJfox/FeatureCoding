@@ -1,4 +1,4 @@
-from encode.combiner.ICombiner import ICombiner
+from encode.utility.string.ICombiner import ICombiner
 
 
 class IEncoder:
