@@ -1,5 +1,5 @@
 from cn.functor.encode.core.did.EncodeDID import EncodeFID
-from cn.functor.encode.core.encoder.DimensionEncoder import DimensionEncoder
+from cn.functor.core.encoder.DimensionEncoder import DimensionEncoder
 from cn.functor.encode.core.interpreter.UniqueInterpreter import UniqueInterpreter
 
 

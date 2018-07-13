@@ -1,5 +1,5 @@
 from cn.functor.encode.core.did.UniqueDID import UniqueList
-from cn.functor.encode.core.encoder.DimensionEncoder import DimensionEncoder
+from cn.functor.core.encoder.DimensionEncoder import DimensionEncoder
 from cn.functor.encode.core.interpreter.CountingInterpreter import CountingInterpreter
 
 
