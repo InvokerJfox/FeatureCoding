@@ -1,5 +1,5 @@
 from cn.ccp.encode.core.did.EncodeDID import EncodeFID
-from cn.ccp.core.encoder.DimensionEncoder import DimensionEncoder
+from cn.ivker.ccp.core.encoder import DimensionEncoder
 from cn.ccp.encode.core.interpreter.UniqueInterpreter import UniqueInterpreter
 
 

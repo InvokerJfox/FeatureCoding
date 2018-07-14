@@ -1,6 +1,7 @@
 from cn.ccp.encode.core.did.UniqueDID import UniqueList
-from cn.ccp.core.encoder.DimensionEncoder import DimensionEncoder
 from cn.ccp.encode.core.interpreter.CountingInterpreter import CountingInterpreter
+
+from cn.ivker.ccp.core.encoder import DimensionEncoder
 
 
 class CountingDID(UniqueList):
