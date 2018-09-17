@@ -1,4 +1,4 @@
-from cn.ccp.encode.core.interpreter.EncodeInterpreter import EncodeInterpreter
+from cn.ivker.ccp.core.interpreter.EncodeInterpreter import EncodeInterpreter
 
 
 class UniqueInterpreter(EncodeInterpreter):

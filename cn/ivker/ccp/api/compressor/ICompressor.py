@@ -1,6 +1,3 @@
-from cn.ccp.encode import Vector
-
-
 class ICompressor:
     """
     数据压缩器接口

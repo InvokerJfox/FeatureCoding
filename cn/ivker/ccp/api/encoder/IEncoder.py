@@ -1,4 +1,4 @@
-from cn.ccp.encode.utility import ICombiner
+from cn.ivker.ccp.utility.string import StringCombiner
 
 
 class IEncoder:
@@ -7,7 +7,7 @@ class IEncoder:
     """
 
     @staticmethod
-    def encode(records: list, combiner: ICombiner) -> list:
+    def encode(records: list, combiner: StringCombiner) -> list:
         """
         编码
         :param records:
@@ -17,7 +17,7 @@ class IEncoder:
         pass
 
     @staticmethod
-    def decode(codes: list, combiner: ICombiner) -> list:
+    def decode(codes: list, combiner: StringCombiner) -> list:
         """
         解码
         :param codes:
@@ -27,7 +27,7 @@ class IEncoder:
         pass
 
     @staticmethod
-    def hash(records: list, combiner: ICombiner) -> list:
+    def hash(records: list, combiner: StringCombiner) -> list:
         """
         哈希编码
         :param records:

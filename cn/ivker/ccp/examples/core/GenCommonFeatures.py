@@ -1,9 +1,7 @@
-from encode.example.data import CommonRecords
-from encode.interpreter.CountingInterpreter import CountingInterpreter
-from encode.list.CountingList import CountingList
-from encode.projector.OneHotProjector import OneHotProjector
-
-from cn.ccp.encode.core.did.ProjectedDID import ProjectedList
+from cn.ivker.ccp.examples.data import CommonRecords
+from cn.ivker.ccp.core.interpreter.CountingInterpreter import CountingInterpreter
+from cn.ivker.ccp.core.projector.OneHotProjector import OneHotProjector
+from cn.ivker.ccp.core.did.ProjectedDID import ProjectedList
 
 good_interpreter = CountingInterpreter(dimensions=CommonRecords.vertex_projects,
                                        encode_dimensions=CommonRecords.vertex_encodes,

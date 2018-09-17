@@ -1,6 +1,6 @@
-from encode.utility.string.StringCombiner import StringCombiner
+from cn.ivker.ccp.utility.string.StringCombiner import StringCombiner
 
-from cn.ccp.encode.encoder import IEncoder
+from cn.ivker.ccp.api.encoder import IEncoder
 
 
 class DimensionEncoder(IEncoder):

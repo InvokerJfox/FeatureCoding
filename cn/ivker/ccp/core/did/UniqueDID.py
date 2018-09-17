@@ -1,6 +1,6 @@
-from cn.ccp.encode.core.did.EncodeDID import EncodeFID
+from cn.ivker.ccp.encode.core.did.EncodeDID import EncodeFID
 from cn.ivker.ccp.core.encoder import DimensionEncoder
-from cn.ccp.encode.core.interpreter.UniqueInterpreter import UniqueInterpreter
+from cn.ivker.ccp.core.interpreter.UniqueInterpreter import UniqueInterpreter
 
 
 class UniqueDID(EncodeDID):

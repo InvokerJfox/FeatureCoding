@@ -1,5 +1,5 @@
-from cn.ccp.encode.core.did.UniqueDID import UniqueList
-from cn.ccp.encode.core.interpreter.CountingInterpreter import CountingInterpreter
+from cn.ivker.ccp.encode.core.did.UniqueDID import UniqueList
+from cn.ivker.ccp.encode.core.interpreter.CountingInterpreter import CountingInterpreter
 
 from cn.ivker.ccp.core.encoder import DimensionEncoder
 

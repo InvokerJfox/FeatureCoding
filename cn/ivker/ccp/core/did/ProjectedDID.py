@@ -1,7 +1,7 @@
 import numpy as np
 
-from cn.ccp.encode.core.did.CountingDID import CountingList
-from cn.ccp.encode.core.projector.OneHotProjector import OneHotProjector
+from cn.ivker.ccp.encode.core.did.CountingDID import CountingList
+from cn.ivker.ccp.encode.core.projector.OneHotProjector import OneHotProjector
 
 
 class ProjectedDID(CountingList):

@@ -1,4 +1,4 @@
-from cn.ccp.encode.distributor import IDistributor
+from cn.ivker.ccp.distributor import IDistributor
 
 
 class KeyDistributor(IDistributor):

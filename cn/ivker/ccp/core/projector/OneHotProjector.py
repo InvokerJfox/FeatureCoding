@@ -1,9 +1,8 @@
-from encode.encoder.DimensionEncoder import DimensionEncoder
-from encode.interpreter.Interpreter import Interpreter
-from encode.learner.ILearner import ILearner
+from cn.ivker.ccp.core.encoder.DimensionEncoder import DimensionEncoder
+from cn.ivker.ccp.core.interpreter.Interpreter import Interpreter
 from numpy import zeros
 
-from cn.ccp.encode.projector.IProjector import IProjector
+from cn.ivker.ccp.api.projector.IProjector import IProjector
 
 
 class OneHotProjector(ILearner, IProjector):

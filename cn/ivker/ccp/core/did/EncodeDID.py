@@ -1,6 +1,6 @@
 from typing import List
 
-from cn.ccp.encode.core.interpreter.EncodeInterpreter import EncodeInterpreter
+from cn.ivker.ccp.encode.core.interpreter.EncodeInterpreter import EncodeInterpreter
 
 
 class EncodeDID(List):

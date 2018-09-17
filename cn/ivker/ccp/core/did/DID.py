@@ -1,4 +1,4 @@
-from cn.ccp.encode.core.interpreter.Interpreter import Interpreter
+from cn.ivker.ccp.encode.core.interpreter.Interpreter import Interpreter
 
 
 class DID:
